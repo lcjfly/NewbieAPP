@@ -19,7 +19,7 @@ var Detail = React.createClass({
     return (
       <ScrollView>
       	<View style={styles.content}>
-      		<Text>item detail</Text>
+      		<Text>{this.props.item.hostname}</Text>
       	</View>
       </ScrollView>
     );

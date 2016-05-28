@@ -3,19 +3,71 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  AsyncStorage,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } = ReactNative;
 
+var Util = require('./util');
+var Service = require('./service');
+var Item = require('./Item');
+var Detail = require('./Detail');
+
 var Favirate = React.createClass({
+  getInitialState: function() {
+    return {
+      username: 'null'
+    };
+  },
+
+  componentDidMount: function() {
+
+    var path = Service.host + Service.favirate;
+    var results = [];
+    var that = this;
+    var items = [];
+
+    AsyncStorage.getItem('token', function(err, token) {
+      if(!err && token) {
+        // favirate action
+        Util.postWithToken(path, token, {}, function(data) {
+          if(data.status) {
+            results = data.data;
+            for(var i=0;i<results.length;i++) {
+              items.push(
+                <Item
+                  data={results[i]}
+                  nav={that.props.navigator}
+                  component={Detail}
+                  hostname={results[i].hostname}
+                  ip={results[i].ip}
+                 />
+              );
+            }
+            that.setState({
+              items: items
+            });
+          } else {
+            AlertIOS.alert('收藏', data.msg);
+          }
+        });
+      } else {
+        AlertIOS.alert('收藏', '登录状态异常，请退出后重新登录');
+      }
+    });
+    
+  },
+
 	render() {
 	    return (
-	      <View style={styles.container}>
-	        <Text style={styles.welcome}>
-	          Favirate
-	        </Text>
-	      </View>
+	      <ScrollView style={styles.container}>
+          <View style={styles.items}>
+            {this.state.items}
+            <View style={{height: 35}} />
+          </View>
+        </ScrollView>
 	    );
   	}
 });
@@ -23,15 +75,9 @@ var Favirate = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5F5F5',
+    flexDirection: 'column'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
 });
 
 module.exports = Favirate;

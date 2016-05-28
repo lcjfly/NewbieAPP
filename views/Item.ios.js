@@ -15,7 +15,7 @@ var Service = require('./service');
 var Item = React.createClass({
   render() {
     return (
-      <TouchableOpacity onPress={this.loadPage.bind(this, this.props.data)}>
+      <TouchableOpacity onPress={this._loadPage.bind(this, this.props.data)}>
       	<View style={styles.item}>
       	  <View style={styles.icon}>
       	  	<Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>{this.props.type}</Text>
@@ -34,12 +34,12 @@ var Item = React.createClass({
   },
 
   _loadPage: function(data) {
-  	var content = data;
+  	var item = data;
   	this.props.nav.push({
-  		title: '详细信息',
+  		title: this.props.hostname,
   		component: this.props.component,
   		passProps: {
-  			content: content
+  			item: item
   		}
   	});
   }

@@ -19,8 +19,8 @@ var Detail = require('./Detail');
 var Search = React.createClass({
   getInitialState: function() {
     return {
-
-    };
+      items: []
+    }
   },
 
   componentDidMount: function() {
@@ -31,9 +31,10 @@ var Search = React.createClass({
     return (
       <ScrollView style={styles.container}>
         <View style={{height: 50, padding: 7}}>
-          <TextInput style={styles.search} placeholder="搜索" onChangeText={this._search}/>
+          <TextInput style={styles.search} placeholder="请输入机器名称或者IP地址" onChangeText={this._search} />
         </View>
         <View style={styles.items}>
+          {this.state.items}
           <View style={{height: 35}} />
         </View>
       </ScrollView>
@@ -43,25 +44,28 @@ var Search = React.createClass({
   _search: function(val) {
     var path = Service.host + Service.search;
     var results = [];
+    var that = this;
     var items = [];
-
     // search action
     Util.post(path, {
       keyword: val
     }, function(data) {
       if(data.status) {
-        results = data.results;
+        results = data.data;
         for(var i=0;i<results.length;i++) {
           items.push(
             <Item
               data={results[i]}
-              nav={this.props.navigator}
+              nav={that.props.navigator}
               component={Detail}
               hostname={results[i].hostname}
               ip={results[i].ip}
              />
           );
         }
+        that.setState({
+          items: items
+        });
       } else {
         AlertIOS.alert('搜索', data.msg);
       }
