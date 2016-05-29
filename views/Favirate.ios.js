@@ -12,8 +12,8 @@ var {
 
 var Util = require('./util');
 var Service = require('./service');
-var Item = require('./Item');
-var Detail = require('./Detail');
+var Host = require('./Host');
+var HostDetail = require('./HostDetail');
 
 var Favirate = React.createClass({
   getInitialState: function() {
@@ -37,10 +37,10 @@ var Favirate = React.createClass({
             results = data.data;
             for(var i=0;i<results.length;i++) {
               items.push(
-                <Item
+                <Host
                   data={results[i]}
                   nav={that.props.navigator}
-                  component={Detail}
+                  component={HostDetail}
                   hostname={results[i].hostname}
                   ip={results[i].ip}
                  />

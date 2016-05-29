@@ -11,10 +11,13 @@ var {
   View,
 } = ReactNative;
 
-var Util = require('./util');
-var Service = require('./service');
-var Item = require('./Item');
-var Detail = require('./Detail');
+var SearchHost = require('./SearchHost');
+var SearchCabinet = require('./SearchCabinet');
+
+var ReactNativeTableviewSimple = require('react-native-tableview-simple');
+var TableView = ReactNativeTableviewSimple.TableView;
+var Section = ReactNativeTableviewSimple.Section;
+var Cell = ReactNativeTableviewSimple.Cell;
 
 var Search = React.createClass({
   getInitialState: function() {
@@ -27,50 +30,38 @@ var Search = React.createClass({
 
   },
 
+  _searchHost: function() {
+    this.props.navigator.push({
+      title: '搜索主机',
+      component: SearchHost,
+      passProps: {
+
+      }
+    });
+  },
+
+  _searchCabinet: function() {
+    this.props.navigator.push({
+      title: '搜索机柜',
+      component: SearchCabinet,
+      passProps: {
+
+      }
+    });
+  },
+
 	render() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={{height: 50, padding: 7}}>
-          <TextInput style={styles.search} placeholder="请输入机器名称或者IP地址" onChangeText={this._search} />
-        </View>
-        <View style={styles.items}>
-          {this.state.items}
-          <View style={{height: 35}} />
-        </View>
+      <ScrollView contentContainerStyle={styles.stage}>
+          <TableView>
+            <Section header="选择搜索类型">
+              <Cell cellstyle="Basic" title="搜索主机" accessory="DisclosureIndicator" onPress={this._searchHost}/>
+              <Cell cellstyle="Basic" title="搜索机柜" accessory="DisclosureIndicator" onPress={this._searchCabinet}/>
+            </Section>
+          </TableView>
       </ScrollView>
     );
 	},
-
-  _search: function(val) {
-    var path = Service.host + Service.search;
-    var results = [];
-    var that = this;
-    var items = [];
-    // search action
-    Util.post(path, {
-      keyword: val
-    }, function(data) {
-      if(data.status) {
-        results = data.data;
-        for(var i=0;i<results.length;i++) {
-          items.push(
-            <Item
-              data={results[i]}
-              nav={that.props.navigator}
-              component={Detail}
-              hostname={results[i].hostname}
-              ip={results[i].ip}
-             />
-          );
-        }
-        that.setState({
-          items: items
-        });
-      } else {
-        AlertIOS.alert('搜索', data.msg);
-      }
-    });
-  }
 });
 
 const styles = StyleSheet.create({
@@ -78,15 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F5',
     flexDirection: 'column'
-  },
-  search: {
-    height: 35,
-    borderWidth: Util.pixel,
-    borderColor: '#ccc',
-    paddingLeft: 10,
-    borderRadius: 6,
-    backgroundColor: '#fff'
-  },
+  }
 });
 
 module.exports = Search;

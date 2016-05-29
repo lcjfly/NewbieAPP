@@ -16,6 +16,7 @@ var ReactNativeAutoUpdater = require('react-native-auto-updater');
 
 var Service = require('./service');
 var Util = require('./util');
+var Feedback = require('./Feedback');
 
 var ReactNativeTableviewSimple = require('react-native-tableview-simple');
 var TableView = ReactNativeTableviewSimple.TableView;
@@ -94,6 +95,16 @@ var Settings = React.createClass({
     );
   },
 
+  _gotoFeedback: function() {
+    this.props.navigator.push({
+      title: '反馈',
+      component: Feedback,
+      passProps: {
+
+      }
+    });
+  },
+
 	render() {
 	    return (
         <ScrollView contentContainerStyle={styles.stage}>
@@ -119,7 +130,7 @@ var Settings = React.createClass({
               <Section header="版本信息">
                 <Cell cellstyle="RightDetail" title="版本号" detail={ReactNativeAutoUpdater.jsCodeVersion()} />
                 <Cell cellstyle="RightDetail" title="更新日期" detail="xxx" />
-                <Cell cellstyle="Basic" title="报告BUG" accessory="DisclosureIndicator" onPress={() => console.log('Heyho!')}/>
+                <Cell cellstyle="Basic" title="报告BUG" accessory="DisclosureIndicator" onPress={this._gotoFeedback}/>
               </Section>
             </TableView>
         </ScrollView>

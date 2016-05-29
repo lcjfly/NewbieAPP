@@ -13,7 +13,7 @@ var {
 var Util = require('./util');
 var Service = require('./service');
 
-var Detail = React.createClass({
+var HostDetail = React.createClass({
   render() {
   	var content = this.props.content;
     return (
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Detail;
+module.exports = HostDetail;

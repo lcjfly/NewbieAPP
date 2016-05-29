@@ -12,7 +12,7 @@ var {
 var Util = require('./util');
 var Service = require('./service');
 
-var Item = React.createClass({
+var Host = React.createClass({
   render() {
     return (
       <TouchableOpacity onPress={this._loadPage.bind(this, this.props.data)}>
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-module.exports = Item;
+module.exports = Host;

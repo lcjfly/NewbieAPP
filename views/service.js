@@ -5,7 +5,9 @@ var Service = {
 	loginByToken: '/user/login/token',
 	logout: '/user/logout',
 	favirate: '/user/favirate',
-	search: '/item/search'
+	searchHost: '/host/search',
+	searchCabinet: '/cabinet/search',
+	feedback: '/feedback/new'
 }
 
 module.exports = Service;
