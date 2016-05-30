@@ -53,7 +53,6 @@ var SearchCabinet = React.createClass({
       if(data.status) {
         
         results = data.data;
-        console.log(data.data);
         for(var i=0;i<results.length;i++) {
           items.push(
             <Cabinet

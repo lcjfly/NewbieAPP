@@ -30,7 +30,7 @@ var Version = React.createClass({
   _fetchVersionLogs: function() {
     var that = this;
     that.setState({refreshing: true});
-    var path = Service.host + Service.getVersionLogs;
+    var path = Service.host + Service.version;
       // fetch version logs
       Util.get(path, {}, function(data) {
         that.setState({refreshing: false});

@@ -65,11 +65,10 @@ var Search = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  container: {
+  stage: {
+    backgroundColor: '#EFEFF4',
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    flexDirection: 'column'
-  }
+  },
 });
 
 module.exports = Search;

@@ -13,7 +13,7 @@
 
 #import "ReactNativeAutoUpdater.h"
 
-#define JS_CODE_METADATA_URL @"http://192.168.1.201:3000/bundles/getiOSLatestVesion"
+#define JS_CODE_METADATA_URL @"http://opspoc.csvw.com/version/iOSLatestVesion"
 
 @interface AppDelegate() <ReactNativeAutoUpdaterDelegate>
 
@@ -23,7 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  /*
+  
    // OPTION 1 local jsbundle
    NSURL* jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
    
@@ -38,11 +38,11 @@
    self.window.rootViewController = rootViewController;
    [self.window makeKeyAndVisible];
    return YES;
-  */
   
+  /*
   // OPTION 2 remote dynamic update
   // defaultJSCodeLocation is needed at least for the first startup
-  // http://localhost:8081/index.ios.bundle?platform=ios&dev=true
+  // http://localhost:8081/index.ios.bundle?platform=ios&dev=false
   NSURL* defaultJSCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   
   ReactNativeAutoUpdater* updater = [ReactNativeAutoUpdater sharedInstance];
@@ -55,7 +55,7 @@
   [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:JS_CODE_METADATA_URL]
                      defaultJSCodeLocation:defaultJSCodeLocation
                defaultMetadataFileLocation:defaultMetadataFileLocation ];
-  [updater setHostnameForRelativeDownloadURLs:@"http://192.168.1.201:3000"];
+  [updater setHostnameForRelativeDownloadURLs:@"http://opspoc.csvw.com"];
   [updater checkUpdate];
   
   NSURL* latestJSCodeLocation = [updater latestJSCodeLocation];
@@ -68,7 +68,7 @@
   self.window.rootViewController.view = rootView;
   [self.window makeKeyAndVisible];
   return YES;
-  
+  */
 }
 
 @end
