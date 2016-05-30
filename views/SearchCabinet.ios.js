@@ -42,7 +42,7 @@ var SearchCabinet = React.createClass({
 	},
 
   _search: function(val) {
-    var path = Service.host + Service.SearchCabinet;
+    var path = Service.host + Service.searchCabinet;
     var results = [];
     var that = this;
     var items = [];
@@ -51,13 +51,16 @@ var SearchCabinet = React.createClass({
       keyword: val
     }, function(data) {
       if(data.status) {
+        
         results = data.data;
+        console.log(data.data);
         for(var i=0;i<results.length;i++) {
           items.push(
-            <Item
+            <Cabinet
               data={results[i]}
               nav={that.props.navigator}
-              component={Detail}
+              component={CabinetDetail}
+              name={results[i].name}
              />
           );
         }

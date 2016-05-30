@@ -39,20 +39,14 @@ var Feedback = React.createClass({
     var path = Service.host + Service.feedback;
     var that = this;
 
-    AsyncStorage.getItem('token', function(err, token) {
-      if(!err && token) {
-        // feedback action
-        Util.postWithToken(path, token, {
-          content: that.state.content
-        }, function(data) {
-          if(data.status) {
-            AlertIOS.alert('反馈', data.msg);
-          } else {
-            AlertIOS.alert('反馈', '提交成功');
-          }
-        });
+    // feedback action
+    Util.post(path, {
+      content: that.state.content
+    }, function(data) {
+      if(data.status) {
+        AlertIOS.alert('反馈', data.msg);
       } else {
-        AlertIOS.alert('反馈', '登录状态异常，请退出后重新登录');
+        AlertIOS.alert('反馈', '提交成功');
       }
     });
   },

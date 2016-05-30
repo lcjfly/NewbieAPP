@@ -17,6 +17,7 @@ var ReactNativeAutoUpdater = require('react-native-auto-updater');
 var Service = require('./service');
 var Util = require('./util');
 var Feedback = require('./Feedback');
+var Version = require('./Version');
 
 var ReactNativeTableviewSimple = require('react-native-tableview-simple');
 var TableView = ReactNativeTableviewSimple.TableView;
@@ -43,12 +44,10 @@ var Settings = React.createClass({
   componentDidMount: function() {
 
     var that = this;
-    AsyncStorage.multiGet(['username', 'token'], function(errs, values) {
+    AsyncStorage.getItem('username', function(errs, value) {
       if(!errs) {
-        var obj = Util.arr2Obj(values);
         that.setState({
-          username: obj.username,
-          token: obj.token
+          username: value,
         });
       }
     });
@@ -76,7 +75,7 @@ var Settings = React.createClass({
         {text: '确认', style: 'confirm',onPress: function() {
           var path = Service.host + Service.logout;
           // logout action
-          Util.postWithToken(path, that.state.token, {}, function(data) {
+          Util.get(path, {}, function(data) {
             if(data.status) {
               // store data locally
               AsyncStorage.removeItem('token', function(err) {
@@ -99,6 +98,16 @@ var Settings = React.createClass({
     this.props.navigator.push({
       title: '反馈',
       component: Feedback,
+      passProps: {
+
+      }
+    });
+  },
+
+  _gotoVersionLog: function() {
+    this.props.navigator.push({
+      title: '更新日志',
+      component: Version,
       passProps: {
 
       }
@@ -129,7 +138,7 @@ var Settings = React.createClass({
 
               <Section header="版本信息">
                 <Cell cellstyle="RightDetail" title="版本号" detail={ReactNativeAutoUpdater.jsCodeVersion()} />
-                <Cell cellstyle="RightDetail" title="更新日期" detail="xxx" />
+                <Cell cellstyle="Basic" title="更新日志" accessory="DisclosureIndicator" onPress={this._gotoVersionLog}/>
                 <Cell cellstyle="Basic" title="报告BUG" accessory="DisclosureIndicator" onPress={this._gotoFeedback}/>
               </Section>
             </TableView>
@@ -140,21 +149,10 @@ var Settings = React.createClass({
 });
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 100,
-    alignItems: 'center'
-  },
-  logoutBtn: {
-    width: 80,
-    height: 35,
-    backgroundColor: '#3BC1FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   stage: {
     backgroundColor: '#EFEFF4',
     paddingBottom: 20,
-    flex: 1
+    flex: 1,
   },
 });
 

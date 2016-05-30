@@ -1,7 +1,10 @@
 var React = require('react-native');
 var Dimensions = require('Dimensions');
 
+var Service = require('./service');
+
 var { 
+	AsyncStorage,
 	PixelRatio
 } = React;
 
@@ -24,39 +27,85 @@ var Util = {
 	    return obj;
 	  },
 
-	post: function(url, data, callback) {
-		var fetchOptions = {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
-		};
-
-		fetch(url, fetchOptions)
-			.then((response) => response.text())
-			.then((responseText) => {
-				callback(JSON.parse(responseText));
-			});
+	get: function(url, data, callback) {
+		this._fetchMethod('GET', url, data, callback);
 	},
 
-	postWithToken: function(url, token, data, callback) {
-		var fetchOptions = {
-			method: 'POST',
-			headers: {
-				"Authorization": "AUTH "+token,
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(data)
-		};
+	post: function(url, data, callback) {
+		this._fetchMethod('POST', url, data, callback);
+	},
 
-		fetch(url, fetchOptions)
-			.then((response) => response.text())
-			.then((responseText) => {
-				callback(JSON.parse(responseText));
-			});
+	put: function(url, data, callback) {
+		this._fetchMethod('PUT', url, data, callback);
+	},
+
+	delete: function(url, data, callback) {
+		this._fetchMethod('DELETE', url, data, callback);
+	},
+
+	_fetchMethod: function(method, url, data, callback) {
+		AsyncStorage.getItem('token', function(errs, value) {
+	      if(!errs) {
+	        var fetchOptions = {
+				method: method,
+				headers: {
+					"Authorization": "AUTH "+value,
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+			};
+
+			if(method !='GET') {
+				fetchOptions.body = JSON.stringify(data);
+			}
+
+			fetch(url, fetchOptions)
+				.then((response) => response.text())
+				.then((responseText) => {
+					callback(JSON.parse(responseText));
+				});
+		  }
+	    });
+	},
+
+	setLocalFavirates: function(hostIds, cabinetIds) {
+		AsyncStorage.multiSet([
+          [Service.LS_F_HOSTIDS, JSON.stringify(hostIds)],
+          [Service.LS_F_CABINETIDS, JSON.stringify(cabinetIds)],
+        ], function(err) {
+          if(err) {
+          }else {
+          }
+        });
+	},
+
+	isFaviratedHost: function(hostid, callback) {
+		AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
+	      if(!err) {
+	      	var fHostIds = value;
+	      	if(fHostIds.indexOf(hostid) != -1) {
+	      		callback(null, true)	
+	      	} else {
+	      		callback(null, false)
+	      	}
+	      } else {
+	      	console.log('isFaviratedHost failed \n\n');
+	      }
+	  });
+	},
+
+	isFaviratedCabinet: function(cabinetid, callback) {
+		AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+	      if(!err) {
+	      	var fCabinetIds = value;
+	      	console.log('fCabinetIds'+fCabinetIds);
+	      	if(fCabinetIds.indexOf(cabinetid) != -1) {
+	      		callback(null, true)	
+	      	} else {
+	      		callback(null, false)
+	      	}
+	      }
+	  });
 	},
 
 	//key

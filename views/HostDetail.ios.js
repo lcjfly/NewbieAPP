@@ -19,7 +19,7 @@ var HostDetail = React.createClass({
     return (
       <ScrollView>
       	<View style={styles.content}>
-      		<Text>{this.props.item.hostname}</Text>
+      		<Text>{this.props.host.hostname}</Text>
       	</View>
       </ScrollView>
     );
