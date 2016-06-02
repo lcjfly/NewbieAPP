@@ -109,7 +109,10 @@ var Util = {
 	},
 
 	//key
-	key: 'keyxxx'
+	key: 'keyxxx',
+
+	default_u_count: 42,	// 机柜默认u数量
+	u_height: 15	// 机柜每个u高度
 }
 
 module.exports = Util;

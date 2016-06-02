@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: Util.pixel,
     borderBottomColor: '#ddd',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    flex: 1
   },
   icon: {
     height: 50,

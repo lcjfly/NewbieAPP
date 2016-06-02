@@ -14,7 +14,7 @@ var {
 var Util = require('./util');
 var Service = require('./service');
 var Host = require('./Host');
-var HostDetail = require('./HostDetail');
+var HostView = require('./HostView');
 
 var SearchHost = React.createClass({
   getInitialState: function() {
@@ -57,7 +57,7 @@ var SearchHost = React.createClass({
             <Host
               data={results[i]}
               nav={that.props.navigator}
-              component={HostDetail}
+              component={HostView}
               hostname={results[i].hostname}
               ip={results[i].ip}
              />

@@ -52,7 +52,7 @@ var Search = React.createClass({
 
 	render() {
     return (
-      <ScrollView contentContainerStyle={styles.stage}>
+      <ScrollView style={styles.stage}>
           <TableView>
             <Section header="选择搜索类型">
               <Cell cellstyle="Basic" title="搜索主机" accessory="DisclosureIndicator" onPress={this._searchHost}/>

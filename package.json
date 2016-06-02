@@ -9,6 +9,9 @@
     "react": "15.0.2",
     "react-native": "0.26.2",
     "react-native-auto-updater": "^0.2.5",
+    "react-native-communications": "^2.0.0",
+    "react-native-gifted-messenger": "^0.1.4",
+    "react-native-socketio": "^0.2.0",
     "react-native-tableview-simple": "^0.10.1",
     "react-refresh-control": "^2.0.5"
   }

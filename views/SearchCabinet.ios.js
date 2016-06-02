@@ -14,7 +14,7 @@ var {
 var Util = require('./util');
 var Service = require('./service');
 var Cabinet = require('./Cabinet');
-var CabinetDetail = require('./CabinetDetail');
+var CabinetView = require('./CabinetView');
 
 var SearchCabinet = React.createClass({
   getInitialState: function() {
@@ -58,7 +58,7 @@ var SearchCabinet = React.createClass({
             <Cabinet
               data={results[i]}
               nav={that.props.navigator}
-              component={CabinetDetail}
+              component={CabinetView}
               name={results[i].name}
              />
           );

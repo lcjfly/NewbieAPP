@@ -16,9 +16,9 @@ var {
 var Util = require('./util');
 var Service = require('./service');
 var Host = require('./Host');
-var HostDetail = require('./HostDetail');
+var HostView = require('./HostView');
 var Cabinet = require('./Cabinet');
-var CabinetDetail = require('./CabinetDetail');
+var CabinetView = require('./CabinetView');
 
 var Favirate = React.createClass({
   getInitialState: function() {
@@ -61,7 +61,7 @@ var Favirate = React.createClass({
             <Host
               data={fHosts[i]}
               nav={that.props.navigator}
-              component={HostDetail}
+              component={HostView}
               hostname={fHosts[i].hostname}
               ip={fHosts[i].ip}
              />
@@ -76,7 +76,7 @@ var Favirate = React.createClass({
             <Cabinet
               data={fCabinets[i]}
               nav={that.props.navigator}
-              component={CabinetDetail}
+              component={CabinetView}
               name={fCabinets[i].name}
              />
           );
@@ -99,19 +99,19 @@ var Favirate = React.createClass({
 
 	render() {
 	    return (
-  	      <ScrollView 
+  	      <ScrollView style={styles.container}
             refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._fetchFavirates}
             />}
             style={styles.container}>
-              <View style={styles.host}>
+              <View style={styles.hosts}>
                 {this.state.favirateHosts}
                 <View style={{height: 35}} />
               </View>
 
-              <View style={styles.cabinet}>
+              <View style={styles.cabinets}>
                 {this.state.favirateCabinets}
                 <View style={{height: 35}} />
               </View>
@@ -126,6 +126,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     flexDirection: 'column'
   },
+  hosts: {
+    flex: 1
+  },
+  cabinets: {
+    flex: 1
+  }
 });
 
 module.exports = Favirate;

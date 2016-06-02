@@ -12,10 +12,16 @@ var Service = {
 	favirateHost: '/user/favirate/host/',
 	favirateCabinet: '/user/favirate/cabinet/',
 
+	getHostById: '/host/',
+
 	version: '/version/',
 
 	LS_F_HOSTIDS: 'LS_F_HOSTIDS',
-	LS_F_CABINETIDS: 'LS_F_CABINETIDS'
+	LS_F_CABINETIDS: 'LS_F_CABINETIDS',
+
+	ws_url: 'ws://localhost:3000',
+
+	
 }
 
 module.exports = Service;
