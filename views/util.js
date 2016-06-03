@@ -5,6 +5,7 @@ var Service = require('./service');
 
 var { 
 	AsyncStorage,
+	Navigator,
 	PixelRatio
 } = React;
 
@@ -112,7 +113,9 @@ var Util = {
 	key: 'keyxxx',
 
 	default_u_count: 42,	// 机柜默认u数量
-	u_height: 15	// 机柜每个u高度
+	u_height: 15,	// 机柜每个u高度,
+
+	//view_height: Navigator.NavigationBar.Styles.General.NavBarHeight - Navigator.NavigationBar.Styles.General.StatusBarHeight
 }
 
 module.exports = Util;

@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  Navigator,
   ScrollView,
   StyleSheet,
   Text,
@@ -70,31 +71,33 @@ var CabinetView = React.createClass({
   render() {
   	var cabinet = this.props.cabinet;
     return (
-      <ScrollView style={styles.scrollView}>
-      	<View style={styles.cabinet}>
-      		<View style={styles.cabinetHead}>
-            <Text style={styles.cabinetName}>JG280</Text>
-          </View>
-          <View style={styles.cabinetBody}>
-            <View style={styles.cabinetBodySidebar}>
-              <CabinetSidebarView />
+        <ScrollView style={styles.scrollView}>
+        	<View style={styles.cabinet}>
+        		<View style={styles.cabinetHead}>
+              <Text style={styles.cabinetName}>{Util.view_height}</Text>
             </View>
-            <View style={styles.cabinetBodyUnits}>
-              {this.state.uDatas}
+            <View style={styles.cabinetBody}>
+              <View style={styles.cabinetBodySidebar}>
+                <CabinetSidebarView />
+              </View>
+              <View style={styles.cabinetBodyUnits}>
+                {this.state.uDatas}
+              </View>
+              <View style={styles.cabinetBodySidebar}>
+                <CabinetSidebarView />
+              </View>
             </View>
-            <View style={styles.cabinetBodySidebar}>
-              <CabinetSidebarView />
-            </View>
-          </View>
-      	</View>
-      </ScrollView>
+        	</View>
+        </ScrollView>
     );
   }
 });
 
 const styles = StyleSheet.create({
   scrollView: {
-    flex: 1
+    flex: 1,
+    
+    //marginBottom: Util.view_height
   },
   cabinet: {
     flex: 1,

@@ -35,17 +35,16 @@ var cView = React.createClass({
   },
 
   _onClick: function() {
-        Alert.alert('you clicked the msg');
-    },
+      Alert.alert('you clicked the msg');
+  },
 
   render() {
-
     return (
-          <TouchableOpacity onPress={this._onClick}>
-            <View>
-              <Text style={{color: '#000'}}>{this.props.msg}aaa</Text>
-            </View>
-          </TouchableOpacity>
+      <TouchableOpacity onPress={this._onClick}>
+        <View>
+          <Text style={{color: '#000'}}>{this.props.msg}aaa</Text>
+        </View>
+      </TouchableOpacity>
     );
   },
 
@@ -300,7 +299,7 @@ var Message = React.createClass({
           messages={this.state.messages}
           handleSend={this.handleSend.bind(this)}
           onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-          maxHeight={Dimensions.get('window').height - Navigator.NavigationBar.Styles.General.NavBarHeight - STATUS_BAR_HEIGHT -50}
+          maxHeight={Dimensions.get('window').height - Navigator.NavigationBar.Styles.General.NavBarHeight - STATUS_BAR_HEIGHT}
 
           loadEarlierMessagesButton={!this.state.allLoaded}
           onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
