@@ -57,7 +57,7 @@ var CabinetUnitView = React.createClass({
   render() {
   	var that = this;
     return (
-      <View style={[styles.cabinetUnit, {height: Util.u_height * that.state.uCount}]}>
+      <View style={[styles.cabinetUnit, {height: Util.default_u_height * that.state.uCount}]}>
       	{this.state.unitRowViews}
       </View>
     );

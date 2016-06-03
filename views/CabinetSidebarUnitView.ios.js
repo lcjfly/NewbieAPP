@@ -38,13 +38,13 @@ var CabinetSidebarUnitView = React.createClass({
 
 const styles = StyleSheet.create({
   cabinetSidebarUnit: {
-  	height: Util.u_height,
+  	height: Util.default_u_height,
   	borderWidth: 1,
     borderColor: '#333',
   },
   cabinetSidebarUnitText: {
     textAlign: 'center',
-    lineHeight: Util.u_height,
+    lineHeight: Util.default_u_height,
   },
 });
 

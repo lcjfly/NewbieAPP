@@ -36,7 +36,6 @@ var CabinetSidebarView = React.createClass({
   },
   
   render() {
-  	var cabinet = this.props.cabinet;
     return (
       <View style={styles.cabinetSidebar}>
         {this.state.sidebarUnits}
@@ -47,7 +46,7 @@ var CabinetSidebarView = React.createClass({
 
 const styles = StyleSheet.create({
   cabinetSidebar: {
-  	flex: 1
+  	flex: 1,
   },
 });
 

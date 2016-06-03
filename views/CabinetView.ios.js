@@ -19,7 +19,7 @@ var CabinetUnitView = require('./CabinetUnitView');
 * 机柜视图
 * name: 名称 string
 * uCount: unit数量 int default=42
-* uDatas: unit数据 [{uStart, uEnd, unitRowCount, unitColumnCount, [{index, name, type...}]}]
+* uDatas: unit数据 [{uStart, uEnd, unitRowCount, unitColumnCount, [{index, name, type...}]}, {...}]
 */
 var CabinetView = React.createClass({
 
@@ -29,33 +29,67 @@ var CabinetView = React.createClass({
 
     // !构建机柜数据
     var testuDatas = [];
-    var testSlotDatas = [
-      {index: 5, slotName: 'fwb1b', slotType:'防火墙2'},
-      {index: 10, slotName: 'fwb1b', slotType:'防火墙10'}];
-    testuDatas.push(
-      <CabinetUnitView uStart='20' uEnd='30' slotDatas={testSlotDatas} unitColumnCount='8' unitRowCount='2' />);
+    for(var i=0;i<uCount;i++) {
+      testuDatas.push(
+        <CabinetUnitView uStart={i} uEnd={i} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
+    }
 
-    var testSlotDatas2 = [
-      {index: 0, slotName: '', slotType:''}];
-    testuDatas.push(
-      <CabinetUnitView uStart='3' uEnd='5' slotDatas={testSlotDatas2} unitColumnCount='1' unitRowCount='1' />);
-
-    var testSlotDatas3 = [
-      {index: 0, slotName: 'fwb1b', slotType:'防火墙2'}];
-    testuDatas.push(
-      <CabinetUnitView uStart='1' uEnd='5' slotDatas={testSlotDatas3} unitColumnCount='1' unitRowCount='1' />);
+    // 传入的数据
+    var json = [
+      {
+        uStart: 2,
+        uEnd: 10,
+        unitColumnCount: 8,
+        unitRowCount: 2,
+        slotDatas: [
+          {index: 5, slotName: 'fwb1b', slotType:'防火墙'},
+          {index: 10, slotName: 'fwb2b', slotType:'防火墙'}
+        ]
+      },
+      {
+        uStart: 11,
+        uEnd: 16,
+        unitColumnCount: 1,
+        unitRowCount: 1,
+        slotDatas: [
+          {index: 0, slotName: '6units', slotType:''}
+        ]
+      },
+      {
+        uStart: 18,
+        uEnd: 19,
+        unitColumnCount: 1,
+        unitRowCount: 1,
+        slotDatas: [
+          {index: 0, slotName: '2units', slotType:''}
+        ]
+      },
+      {
+        uStart: 41,
+        uEnd: 42,
+        unitColumnCount: 1,
+        unitRowCount: 1,
+        slotDatas: [
+          {index: 0, slotName: '1unit', slotType:''}
+        ]
+      },
+    ];
     
-    var testSlotDatas5 = [
-      {index: 0, slotName: '', slotType:''}];
-    testuDatas.push(
-      <CabinetUnitView uStart='3' uEnd='3' slotDatas={testSlotDatas5} unitColumnCount='1' unitRowCount='1' />);
+    var temp = 0;
+    for(var i=0;i<json.length;i++) {
+      var uStart = json[i].uStart -1,
+          uEnd = json[i].uEnd -1;
+      var uCount = uEnd - uStart + 1;
+      testuDatas.splice(
+        uStart-temp,
+        uCount,
+        <CabinetUnitView uStart={json[i].uStart} uEnd={json[i].uEnd} slotDatas={json[i].slotDatas} unitColumnCount={json[i].unitColumnCount} unitRowCount={json[i].unitRowCount} />
+      );
+      temp += uCount-1;
+    }
 
-
-    var testSlotDatas4 = [
-      {index: 0, slotName: 'aaa', slotType:'aaa'},
-      {index: 1, slotName: 'bbb', slotType:'bbb'}];
-    testuDatas.push(
-      <CabinetUnitView uStart='1' uEnd='6' slotDatas={testSlotDatas4} unitColumnCount='2' unitRowCount='1' />);
+    // 机柜数据从下往上
+    testuDatas = testuDatas.reverse();
 
     return {
       uCount: uCount,
@@ -69,12 +103,11 @@ var CabinetView = React.createClass({
   },
   
   render() {
-  	var cabinet = this.props.cabinet;
     return (
         <ScrollView style={styles.scrollView}>
         	<View style={styles.cabinet}>
         		<View style={styles.cabinetHead}>
-              <Text style={styles.cabinetName}>{Util.view_height}</Text>
+              <Text style={styles.cabinetName}></Text>
             </View>
             <View style={styles.cabinetBody}>
               <View style={styles.cabinetBodySidebar}>
@@ -96,13 +129,10 @@ var CabinetView = React.createClass({
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    
-    //marginBottom: Util.view_height
   },
   cabinet: {
     flex: 1,
     flexDirection: 'column',
-
   },
   cabinetHead: {
     backgroundColor: '#ccc',
@@ -118,7 +148,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd',
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#000',
   },
   cabinetBodyUnits: {
     flexDirection: 'column',
