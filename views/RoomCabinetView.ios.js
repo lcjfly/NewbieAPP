@@ -16,6 +16,8 @@ var Service = require('./service');
 var Util = require('./util');
 var CabinetView = require('./CabinetView');
 
+
+
 /*
 * 机房机柜视图
 * name: 机柜名称 string
@@ -24,8 +26,42 @@ var CabinetView = require('./CabinetView');
 var RoomCabinetView = React.createClass({
 
   getInitialState: function() {
+    var color = Util.CABINET_DEFAULT_COLOR;
+    var paddingTop = 0, paddingBottom = 0;
+    switch(this.props.type) {
+      case Util.CABINET_TYPE_STORAGE_HP_SUN: 
+        color = Util.CABINET_COLOR_STORAGE_HP_SUN;
+        break;
+      case Util.CABINET_TYPE_IBMP:
+        color = Util.CABINET_COLOR_IBMP;
+        break;
+      case Util.CABINET_TYPE_NETWORK:
+        color = Util.CABINET_COLOR_NETWORK;
+        break;
+      case Util.CABINET_TYPE_PC:
+        color = Util.CABINET_COLOR_PC;
+        break;
+      case Util.CABINET_TYPE_CAE_HPC:
+        color = Util.CABINET_COLOR_CAE_HPC;
+        break;
+      case Util.CABINET_TYPE_CABLE:
+        color = Util.CABINET_COLOR_CABLE;
+        break;
+      case Util.CABINET_TYPE_POWER:
+        color = Util.CABINET_COLOR_POWER;
+        paddingTop = 5;
+        paddingBottom = 5;
+        break;
+        case Util.CABINET_TYPE_OTHER:
+        color = Util.CABINET_COLOR_OTHER;
+        break;
+    }
     return {
-    	name: this.props.name
+    	name: this.props.name,
+      type: this.props.type,
+      color: color,
+      paddingTop: paddingTop,
+      paddingBottom: paddingBottom
     };
   },
 
@@ -142,7 +178,7 @@ var RoomCabinetView = React.createClass({
     return (
       <View>
         <TouchableHighlight onPress={this._showCabinetDetail}>
-          <View style={styles.cabinet}>
+          <View style={[styles.cabinet, {backgroundColor: this.state.color, paddingTop: this.state.paddingTop, paddingBottom: this.state.paddingBottom}]}>
             <Text style={styles.cabinetName}>
             	{this.state.name}
             </Text>
@@ -158,8 +194,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderColor: '#fff',
-    backgroundColor: '#f82887'
-
   },
   cabinetName: {
     flex: 1,
@@ -167,7 +201,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     fontSize: 15,
     textAlign: 'center',
-    color: '#fff'
+    color: '#fff',
   }
 });
 

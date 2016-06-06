@@ -15,7 +15,7 @@ var RoomCabinetColumnView = require('./RoomCabinetColumnView');
 
 /*
 * 机房机柜对（最多2列）视图
-* roomCabinetColumnPairDatas: 机柜列数据 [[{index, name}]+] index从0开始
+* roomCabinetColumnPairDatas: 机柜列数据 [[{index, name, type}]+] index从0开始
 */
 var RoomCabinetColumnPairView = React.createClass({
 
