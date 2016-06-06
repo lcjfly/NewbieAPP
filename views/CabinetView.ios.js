@@ -37,7 +37,7 @@ var CabinetView = React.createClass({
     // 传入的数据
     var json = [
       {
-        uStart: 2,
+        uStart: 3,
         uEnd: 10,
         unitColumnCount: 8,
         unitRowCount: 2,
@@ -56,8 +56,8 @@ var CabinetView = React.createClass({
         ]
       },
       {
-        uStart: 18,
-        uEnd: 19,
+        uStart: 20,
+        uEnd: 23,
         unitColumnCount: 1,
         unitRowCount: 1,
         slotDatas: [
@@ -67,10 +67,11 @@ var CabinetView = React.createClass({
       {
         uStart: 41,
         uEnd: 42,
-        unitColumnCount: 1,
+        unitColumnCount: 2,
         unitRowCount: 1,
         slotDatas: [
-          {index: 0, slotName: '1unit', slotType:''}
+          {index: 0, slotName: '48芯单模光配', slotType:''},
+          {index: 1, slotName: 'GP01上联至JG12', slotType:''}
         ]
       },
     ];
@@ -87,6 +88,29 @@ var CabinetView = React.createClass({
       );
       temp += uCount-1;
     }
+
+    // 将连续的空槽位合并显示为一个空槽位
+    for(var i=0;i<testuDatas.length;i++) {
+      if(testuDatas[i].props.unitColumnCount == '1' && testuDatas[i].props.unitRowCount == '1'
+        && testuDatas[i].props.slotDatas[0].slotName == '' && testuDatas[i].props.slotDatas[0].slotType == '') {
+          var temp = i+1;
+          while(true) {
+            if(testuDatas[temp].props.unitColumnCount == '1' && testuDatas[temp].props.unitRowCount == '1'
+              && testuDatas[temp].props.slotDatas[0].slotName == '' && testuDatas[temp].props.slotDatas[0].slotType == '') {
+              temp++;
+            } else {
+              break;
+            }
+          }
+          if(temp - i >= 2) {
+            testuDatas.splice(
+              i,
+              temp-i, 
+              <CabinetUnitView uStart={i} uEnd={temp -1} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
+          }
+      }
+    }
+
 
     // 机柜数据从下往上
     testuDatas = testuDatas.reverse();

@@ -30,11 +30,11 @@ var CabinetUnitRowView = React.createClass({
         <CabinetUnitRowSlotView slotName="" slotType="" />);
     }
 
-
     for(var i=0;i<rowSlotDatas.length;i++) {
       var index = rowSlotDatas[i].index % cCount;
       rowSlotViews[index] = <CabinetUnitRowSlotView slotName={rowSlotDatas[i].slotName} slotType={rowSlotDatas[i].slotType} />;
     }
+
     return {
       rowSlotViews: rowSlotViews
     }
@@ -57,8 +57,6 @@ const styles = StyleSheet.create({
   cabinetUnitRowSlot: {
     flex: 1,
   	flexDirection: 'row',
-  	borderWidth: 1,
-    borderColor: '#0f0',
   },
   cabinetUnitRowSlotName: {
   	

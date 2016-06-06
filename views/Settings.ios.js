@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  AlertIOS,
+  Alert,
   AsyncStorage,
   ScrollView,
   StyleSheet,
@@ -65,7 +65,7 @@ var Settings = React.createClass({
   _logout: function() {
 
     var that = this;
-    AlertIOS.alert(
+    Alert.alert(
       '登出', 
       '确认登出？',
       [

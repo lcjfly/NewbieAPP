@@ -4,7 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
   ActionSheetIOS,
-  AlertIOS,
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -42,9 +42,9 @@ var HostMessage = React.createClass({
               var path = Service.host + Service.favirateHost + that.props.id;
               Util.post(path, { }, function(data) {
                 if(data.status) {
-                  AlertIOS.alert('添加收藏成功');
+                  Alert.alert('添加收藏成功');
                 } else {
-                  AlertIOS.alert('添加收藏失败');
+                  Alert.alert('添加收藏失败');
                 }
               });
             });
@@ -53,7 +53,7 @@ var HostMessage = React.createClass({
             options.push('取消');
 
             events.push(function() {
-              AlertIOS.alert('share');
+              Alert.alert('share');
             });
             ActionSheetIOS.showActionSheetWithOptions({
                 options: options,
@@ -68,11 +68,11 @@ var HostMessage = React.createClass({
               var path = Service.host + Service.favirateHost + that.props.id;
               Util.delete(path, { }, function(data) {
                 if(data.status) {
-                  AlertIOS.alert('取消收藏成功');
+                  Alert.alert('取消收藏成功');
                   
                 } else {
                   console.log('add favirate return:'+data.msg);
-                  AlertIOS.alert('取消收藏失败');
+                  Alert.alert('取消收藏失败');
                 }
               });
             });
@@ -81,7 +81,7 @@ var HostMessage = React.createClass({
             options.push('取消');
 
             events.push(function() {
-              AlertIOS.alert('share');
+              Alert.alert('share');
             });
 
             ActionSheetIOS.showActionSheetWithOptions({
@@ -114,7 +114,7 @@ var HostMessage = React.createClass({
             onRightButtonPress: that._showActionSheet,
           });
         } else {
-          AlertIOS.alert('查看分享的主机', data.msg);
+          Alert.alert('查看分享的主机', data.msg);
         }
       });
     },

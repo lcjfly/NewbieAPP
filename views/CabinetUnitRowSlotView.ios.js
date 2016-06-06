@@ -3,8 +3,10 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  Alert,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } = ReactNative;
 
@@ -29,24 +31,36 @@ var CabinetUnitRowSlotView = React.createClass({
   componentDidMount: function() {
 
   },
+
+  _showHostDetail: function() {
+    if(this.state.slotName) {
+      Alert.alert('You clicked '+this.state.slotName);
+    }
+  },
   
   render() {
     return (
-      <View style={styles.cabinetUnitRowSlot}>
-      	<Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
+      <View style={styles.slotViewContainer}>
+        <TouchableHighlight onPress={this._showHostDetail} style={{flex: 1}}>
+          <View style={styles.cabinetUnitRowSlot}>
+          	<Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
+          </View>
+        </TouchableHighlight>
       </View>
     );
   }
 });
 
 const styles = StyleSheet.create({
+  slotViewContainer: {
+    flex: 1,
+  },
   cabinetUnitRowSlot: {
     flex: 1,
-  	flexDirection: 'column',
-  	justifyContent: 'center',
   	alignItems: 'center',
   	borderWidth: 1,
     borderColor: '#fff',
+    justifyContent: 'center'
   },
   cabinetUnitRowSlotType: {
   	

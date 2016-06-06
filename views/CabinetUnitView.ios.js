@@ -66,8 +66,7 @@ var CabinetUnitView = React.createClass({
 
 const styles = StyleSheet.create({
   cabinetUnit: {
-  	borderWidth: 1,
-    borderColor: '#f00',
+  	borderWidth: .5,
     flexWrap: 'nowrap',
     flexDirection: 'column'
   },

@@ -4,7 +4,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {
   ActivityIndicatorIOS,
-  AlertIOS,
+  Alert,
   AsyncStorage,
   RefreshControl,
   ScrollView,
@@ -88,7 +88,7 @@ var Favirate = React.createClass({
           favirateCabinets: cabinets
         });
       } else {
-        AlertIOS.alert('收藏', data.msg);
+        Alert.alert('收藏', data.msg);
       }
     });
   },

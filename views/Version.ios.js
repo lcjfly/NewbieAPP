@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  AlertIOS,
+  Alert,
   AsyncStorage,
   RefreshControl,
   ScrollView,
@@ -48,7 +48,7 @@ var Version = React.createClass({
             versions: versionDetails
           });
         } else {
-          AlertIOS.alert('获取版本更新日志失败');
+          Alert.alert('获取版本更新日志失败');
         }
       });
   },

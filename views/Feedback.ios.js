@@ -44,9 +44,9 @@ var Feedback = React.createClass({
       content: that.state.content
     }, function(data) {
       if(data.status) {
-        AlertIOS.alert('反馈', data.msg);
+        Alert.alert('反馈', data.msg);
       } else {
-        AlertIOS.alert('反馈', '提交成功');
+        Alert.alert('反馈', '提交成功');
       }
     });
   },

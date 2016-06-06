@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  AlertIOS,
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -67,7 +67,7 @@ var SearchHost = React.createClass({
           items: items
         });
       } else {
-        AlertIOS.alert('搜索', data.msg);
+        Alert.alert('搜索', data.msg);
       }
     });
   }
