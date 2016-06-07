@@ -177,13 +177,22 @@ var RoomCabinetView = React.createClass({
   render() {
     return (
       <View>
-        <TouchableHighlight onPress={this._showCabinetDetail}>
-          <View style={[styles.cabinet, {backgroundColor: this.state.color, paddingTop: this.state.paddingTop, paddingBottom: this.state.paddingBottom}]}>
-            <Text style={styles.cabinetName}>
-            	{this.state.name}
-            </Text>
-          </View>
-        </TouchableHighlight>
+        {
+          this.state.name.trim() == '' ?
+            <View style={[styles.cabinet, {backgroundColor: this.state.color, paddingTop: this.state.paddingTop, paddingBottom: this.state.paddingBottom}]}>
+              <Text style={styles.cabinetName}>
+              	{this.state.name}
+              </Text>
+            </View>
+          :
+          <TouchableHighlight onPress={this._showCabinetDetail}>
+            <View style={[styles.cabinet, {backgroundColor: this.state.color, paddingTop: this.state.paddingTop, paddingBottom: this.state.paddingBottom}]}>
+              <Text style={styles.cabinetName}>
+                {this.state.name}
+              </Text>
+            </View>
+          </TouchableHighlight>
+        }
       </View>
     );
   }

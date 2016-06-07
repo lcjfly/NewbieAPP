@@ -41,12 +41,18 @@ var CabinetUnitRowSlotView = React.createClass({
   render() {
     return (
       <View style={styles.slotViewContainer}>
-        <TouchableHighlight onPress={this._showHostDetail} style={{flex: 1}}>
+      {this.state.slotName == '' ?
           <View style={styles.cabinetUnitRowSlot}>
           	<Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
           </View>
+        :
+        <TouchableHighlight onPress={this._showHostDetail} style={{flex: 1}}>
+          <View style={styles.cabinetUnitRowSlot}>
+            <Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
+          </View>
         </TouchableHighlight>
-      </View>
+      }
+    </View>
     );
   }
 });

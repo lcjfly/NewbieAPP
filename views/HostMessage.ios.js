@@ -29,95 +29,95 @@ var HostMessage = React.createClass({
 
   },
 
-    _showActionSheet: function() {
-      var that = this;
-      var options = [];
-      var events = [];
+  _showActionSheet: function() {
+    var that = this;
+    var options = [];
+    var events = [];
 
-      Util.isFaviratedHost(that.props.id, function(err, isFavirated) {
-        if(!err) {
-          if(!isFavirated) {
-            events.push(function() {
-              // add favirate
-              var path = Service.host + Service.favirateHost + that.props.id;
-              Util.post(path, { }, function(data) {
-                if(data.status) {
-                  Alert.alert('添加收藏成功');
-                } else {
-                  Alert.alert('添加收藏失败');
-                }
-              });
-            });
-            options.push('加入收藏');
-            options.push('分享给大家');
-            options.push('取消');
-
-            events.push(function() {
-              Alert.alert('share');
-            });
-            ActionSheetIOS.showActionSheetWithOptions({
-                options: options,
-                cancelButtonIndex: options.length - 1
-              }, function(index) {
-                events[index] && events[index]();
+    Util.isFaviratedHost(that.props.id, function(err, isFavirated) {
+      if(!err) {
+        if(!isFavirated) {
+          events.push(function() {
+            // add favirate
+            var path = Service.host + Service.favirateHost + that.props.id;
+            Util.post(path, { }, function(data) {
+              if(data.status) {
+                Alert.alert('添加收藏成功');
+              } else {
+                Alert.alert('添加收藏失败');
               }
-            );
-          } else {
-            events.push(function() {
-              // cancel favirate
-              var path = Service.host + Service.favirateHost + that.props.id;
-              Util.delete(path, { }, function(data) {
-                if(data.status) {
-                  Alert.alert('取消收藏成功');
-                  
-                } else {
-                  console.log('add favirate return:'+data.msg);
-                  Alert.alert('取消收藏失败');
-                }
-              });
             });
-            options.push('取消收藏');
-            options.push('分享给大家');
-            options.push('取消');
-
-            events.push(function() {
-              Alert.alert('share');
-            });
-
-            ActionSheetIOS.showActionSheetWithOptions({
-                options: options,
-                cancelButtonIndex: options.length - 1
-              }, function(index) {
-                events[index] && events[index]();
-              }
-            );
-          }
-        } else {
-          console.log('err:\n\n' + err);
-        }
-      });
-    },
-
-
-    _viewHost: function() {
-      var that = this;
-      var path = Service.host + Service.getHostById + this.state.id;
-      Util.get(path, {}, function(data) {
-        if(data.status) {
-          that.props.nav.push({
-            title: data.data.hostname,
-            component: HostView,
-            passProps: {
-              host: data.data
-            },
-            rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 
-            onRightButtonPress: that._showActionSheet,
           });
+          options.push('加入收藏');
+          options.push('分享给大家');
+          options.push('取消');
+
+          events.push(function() {
+            Alert.alert('share');
+          });
+          ActionSheetIOS.showActionSheetWithOptions({
+              options: options,
+              cancelButtonIndex: options.length - 1
+            }, function(index) {
+              events[index] && events[index]();
+            }
+          );
         } else {
-          Alert.alert('查看分享的主机', data.msg);
+          events.push(function() {
+            // cancel favirate
+            var path = Service.host + Service.favirateHost + that.props.id;
+            Util.delete(path, { }, function(data) {
+              if(data.status) {
+                Alert.alert('取消收藏成功');
+                
+              } else {
+                console.log('add favirate return:'+data.msg);
+                Alert.alert('取消收藏失败');
+              }
+            });
+          });
+          options.push('取消收藏');
+          options.push('分享给大家');
+          options.push('取消');
+
+          events.push(function() {
+            Alert.alert('share');
+          });
+
+          ActionSheetIOS.showActionSheetWithOptions({
+              options: options,
+              cancelButtonIndex: options.length - 1
+            }, function(index) {
+              events[index] && events[index]();
+            }
+          );
         }
-      });
-    },
+      } else {
+        console.log('err:\n\n' + err);
+      }
+    });
+  },
+
+
+  _viewHost: function() {
+    var that = this;
+    var path = Service.host + Service.getHostById + this.state.id;
+    Util.get(path, {}, function(data) {
+      if(data.status) {
+        that.props.nav.push({
+          title: data.data.hostname,
+          component: HostView,
+          passProps: {
+            host: data.data
+          },
+          rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 
+          onRightButtonPress: that._showActionSheet,
+        });
+      } else {
+        Alert.alert('查看分享的主机', data.msg);
+      }
+    });
+  },
 
   render() {
   	const flexStyle = {};

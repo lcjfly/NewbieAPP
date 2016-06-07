@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   cabinetColumnPair: {
     flex: 1,
     flexDirection: 'row',
-    marginBottom: 50,
     paddingLeft: 50,
     paddingRight: 50,
     borderWidth: 1,

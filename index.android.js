@@ -11,6 +11,8 @@ import {
   View
 } from 'react-native';
 
+var RoomView = require('./views/RoomView');
+
 class NewbieAPP extends Component {
   render() {
     return (
@@ -48,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('NewbieAPP', () => NewbieAPP);
+AppRegistry.registerComponent('NewbieAPP', () => RoomView);

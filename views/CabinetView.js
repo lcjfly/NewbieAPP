@@ -89,7 +89,7 @@ var CabinetView = React.createClass({
       temp += uCount-1;
     }
 
-    // 将连续的空槽位合并显示为一个空槽位
+    // 将机柜平面图中连续的空槽位合并显示为一个空槽位
     for(var i=0;i<testuDatas.length;i++) {
       if(testuDatas[i].props.unitColumnCount == '1' && testuDatas[i].props.unitRowCount == '1'
         && testuDatas[i].props.slotDatas[0].slotName == '' && testuDatas[i].props.slotDatas[0].slotType == '') {
@@ -128,7 +128,7 @@ var CabinetView = React.createClass({
   
   render() {
     return (
-        <ScrollView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView} maximumZoomScale={2}>
         	<View style={styles.cabinet}>
         		<View style={styles.cabinetHead}>
               <Text style={styles.cabinetName}></Text>

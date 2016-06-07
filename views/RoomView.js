@@ -206,7 +206,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#f00'
+    borderColor: '#f00',
+    marginTop: 20,
   },
 });
 
