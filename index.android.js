@@ -11,7 +11,6 @@ import {
   View
 } from 'react-native';
 
-var RoomView = require('./views/RoomView');
 
 class NewbieAPP extends Component {
   render() {
@@ -21,7 +20,6 @@ class NewbieAPP extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.android.js
         </Text>
         <Text style={styles.instructions}>
           Shake or press menu button for dev menu
@@ -50,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('NewbieAPP', () => RoomView);
+AppRegistry.registerComponent('NewbieAPP', () => NewbieAPP);

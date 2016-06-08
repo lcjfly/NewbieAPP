@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="23"
+    density="xxhdpi"
+    format="7"
+    timestamp="8209258659321"
+    token="-4213208505446061673" >
+
+    <task
+        name="javac"
+        duration="1129" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="61" />
+    <task
+        name="verifier"
+        duration="15" />
+
+    <artifact
+        location="/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
+        type="DEX" />
+
+    <build timestamp="6198737954004" >
+        <artifact
+            location="/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build timestamp="8086658599023" >
+        <artifact
+            location="/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="8209258659321" >
+        <artifact
+            location="/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

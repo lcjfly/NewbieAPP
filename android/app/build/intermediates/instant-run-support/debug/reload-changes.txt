@@ -1,0 +1,2 @@
+CHANGED,/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/aerofs/reactnativeautoupdater/ReactNativeAutoUpdater$override.class
+CHANGED,/Users/luchenjie/Documents/dev/ProjectNewbie/NewbieAPP/android/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class
