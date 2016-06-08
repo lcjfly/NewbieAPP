@@ -11,6 +11,8 @@ import {
   View
 } from 'react-native';
 
+var RoomView = require('./views/RoomView');
+var ReactNativeAutoUpdater = require('react-native-auto-updater');
 
 class NewbieAPP extends Component {
   render() {
@@ -20,6 +22,7 @@ class NewbieAPP extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
+          {ReactNativeAutoUpdater.jsCodeVersion()}
         </Text>
         <Text style={styles.instructions}>
           Shake or press menu button for dev menu

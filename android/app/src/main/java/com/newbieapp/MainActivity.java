@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends ReactNativeAutoUpdaterActivity {
+public class MainActivity extends ReactNativeAutoUpdaterActivity { // ReactActivity, ReactNativeAutoUpdaterActivity
 
     /*************************************************
      * These methods are required for the ReactNativeAutoUpdater Part

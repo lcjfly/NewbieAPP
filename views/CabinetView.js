@@ -14,6 +14,7 @@ var {
 var Util = require('./util');
 var CabinetSidebarView = require('./CabinetSidebarView');
 var CabinetUnitView = require('./CabinetUnitView');
+var LSM = require('./LocalStorageManager');
 
 /*
 * 机柜视图
@@ -34,48 +35,12 @@ var CabinetView = React.createClass({
         <CabinetUnitView uStart={i} uEnd={i} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
     }
 
-    // 传入的数据
-    var json = [
-      {
-        uStart: 3,
-        uEnd: 10,
-        unitColumnCount: 8,
-        unitRowCount: 2,
-        slotDatas: [
-          {index: 5, slotName: 'fwb1b', slotType:'防火墙'},
-          {index: 10, slotName: 'fwb2b', slotType:'防火墙'}
-        ]
-      },
-      {
-        uStart: 11,
-        uEnd: 16,
-        unitColumnCount: 1,
-        unitRowCount: 1,
-        slotDatas: [
-          {index: 0, slotName: '6units', slotType:''}
-        ]
-      },
-      {
-        uStart: 20,
-        uEnd: 23,
-        unitColumnCount: 1,
-        unitRowCount: 1,
-        slotDatas: [
-          {index: 0, slotName: '2units', slotType:''}
-        ]
-      },
-      {
-        uStart: 41,
-        uEnd: 42,
-        unitColumnCount: 2,
-        unitRowCount: 1,
-        slotDatas: [
-          {index: 0, slotName: '48芯单模光配', slotType:''},
-          {index: 1, slotName: 'GP01上联至JG12', slotType:''}
-        ]
-      },
-    ];
+    var json = LSM.fakeCabinetData[this.props.name];
     
+    if(!json.length) {
+      return {};
+    }
+    var that = this;
     var temp = 0;
     for(var i=0;i<json.length;i++) {
       var uStart = json[i].uStart -1,
@@ -84,7 +49,7 @@ var CabinetView = React.createClass({
       testuDatas.splice(
         uStart-temp,
         uCount,
-        <CabinetUnitView uStart={json[i].uStart} uEnd={json[i].uEnd} slotDatas={json[i].slotDatas} unitColumnCount={json[i].unitColumnCount} unitRowCount={json[i].unitRowCount} />
+        <CabinetUnitView nav={that.props.navigator} uStart={json[i].uStart} uEnd={json[i].uEnd} slotDatas={json[i].slotDatas} unitColumnCount={json[i].unitColumnCount} unitRowCount={json[i].unitRowCount} />
       );
       temp += uCount-1;
     }
@@ -169,7 +134,6 @@ const styles = StyleSheet.create({
     
   },
   cabinetBody: {
-    backgroundColor: '#ddd',
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',

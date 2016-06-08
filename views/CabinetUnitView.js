@@ -17,7 +17,7 @@ var CabinetUnitRowView = require('./CabinetUnitRowView');
 * uEnd: 结束位置 int 
 * unitRowCount: unit行数 default=1
 * unitColumnCount: unit列数 default=1
-* slotDatas: 插槽数据 [{index, name, type...}]
+* slotDatas: 插槽数据 [{index, id, name, type...}]
 */
 var CabinetUnitView = React.createClass({
 
@@ -28,6 +28,7 @@ var CabinetUnitView = React.createClass({
   		slotDatas = this.props.slotDatas;
   	
   	// 分配相应index的数据至正确的行
+    var that = this;
   	var unitRowViews = [];
   	for(var i=0;i<unitRowCount;i++) {
   		var rowSlotDatas = [];
@@ -37,7 +38,7 @@ var CabinetUnitView = React.createClass({
   			}
   		}
   		var rowUCount = uCount/unitRowCount;
-  		unitRowViews[i] = <CabinetUnitRowView cCount={unitColumnCount} uCount={rowUCount} rowSlotDatas={rowSlotDatas} />;
+  		unitRowViews[i] = <CabinetUnitRowView nav={that.props.nav} cCount={unitColumnCount} uCount={rowUCount} rowSlotDatas={rowSlotDatas} />;
   	}
 
     return {
@@ -66,7 +67,6 @@ var CabinetUnitView = React.createClass({
 
 const styles = StyleSheet.create({
   cabinetUnit: {
-  	borderWidth: .5,
     flexWrap: 'nowrap',
     flexDirection: 'column'
   },

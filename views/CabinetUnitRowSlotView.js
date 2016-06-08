@@ -6,11 +6,12 @@ var {
   Alert,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } = ReactNative;
 
 var Util = require('./util');
+var HostView = require('./HostView');
 
 /*
 * 机柜u的slot视图
@@ -23,6 +24,7 @@ var CabinetUnitRowSlotView = React.createClass({
 
   getInitialState: function() {
     return {
+      slotId: this.props.slotId,
       slotName: this.props.slotName,
       slotType: this.props.slotType,
     }
@@ -33,8 +35,16 @@ var CabinetUnitRowSlotView = React.createClass({
   },
 
   _showHostDetail: function() {
+    var that = this;
     if(this.state.slotName) {
-      Alert.alert('You clicked '+this.state.slotName);
+      //Alert.alert('You clicked '+this.state.slotName);
+      that.props.nav.push({
+        title: this.state.slotName,
+        component: HostView,
+        passProps: {
+          id: that.state.slotId
+        },
+      });
     }
   },
   
@@ -46,11 +56,11 @@ var CabinetUnitRowSlotView = React.createClass({
           	<Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
           </View>
         :
-        <TouchableHighlight onPress={this._showHostDetail} style={{flex: 1}}>
+        <TouchableOpacity onPress={this._showHostDetail} style={{flex: 1}}>
           <View style={styles.cabinetUnitRowSlot}>
             <Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
       }
     </View>
     );
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
   	alignItems: 'center',
   	borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: '#000',
     justifyContent: 'center'
   },
   cabinetUnitRowSlotType: {

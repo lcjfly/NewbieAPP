@@ -15,7 +15,7 @@ var CabinetUnitRowSlotView = require('./CabinetUnitRowSlotView');
 * 机柜u的slot行视图
 * uCount: 占据的u数量（用来计算view高度）
 * cCount: 列数
-* rowSlotDatas: 插槽数据 [{index, name, type...}] index从0开始
+* rowSlotDatas: 插槽数据 [{index, id, name, type...}] index从0开始
 */
 var CabinetUnitRowView = React.createClass({
   
@@ -24,6 +24,7 @@ var CabinetUnitRowView = React.createClass({
     var cCount = parseInt(this.props.cCount.toString());
     
     // 初始化row中的数据为默认数据
+    var that = this;
     var rowSlotViews = [];
     for(var i=0;i<cCount;i++) {
       rowSlotViews.push(
@@ -32,7 +33,7 @@ var CabinetUnitRowView = React.createClass({
 
     for(var i=0;i<rowSlotDatas.length;i++) {
       var index = rowSlotDatas[i].index % cCount;
-      rowSlotViews[index] = <CabinetUnitRowSlotView slotName={rowSlotDatas[i].slotName} slotType={rowSlotDatas[i].slotType} />;
+      rowSlotViews[index] = <CabinetUnitRowSlotView nav={that.props.nav} slotId={rowSlotDatas[i].slotId} slotName={rowSlotDatas[i].slotName} slotType={rowSlotDatas[i].slotType} />;
     }
 
     return {

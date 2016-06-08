@@ -12,14 +12,25 @@ var {
 
 var Util = require('./util');
 var Service = require('./service');
+var LSM = require('./LocalStorageManager');
 
 var HostView = React.createClass({
+
+  getInitialState: function() {
+    var host = LSM.fakeHostData[this.props.id] || {name: "", ip:""};
+    return {
+      name: host.name,
+      ip: host.ip
+    }
+  },
+
   render() {
   	var content = this.props.content;
     return (
       <ScrollView>
       	<View style={styles.content}>
-      		<Text>{this.props.host.hostname}</Text>
+      		<Text>{this.state.name}</Text>
+          <Text>{this.state.ip}</Text>
       	</View>
       </ScrollView>
     );

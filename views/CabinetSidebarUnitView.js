@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   cabinetSidebarUnit: {
   	height: Util.default_u_height,
   	borderWidth: 1,
-    borderColor: '#333',
+    borderColor: '#000',
   },
   cabinetSidebarUnitText: {
     textAlign: 'center',
