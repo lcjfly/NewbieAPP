@@ -39,8 +39,7 @@ var CabinetSidebarUnitView = React.createClass({
 const styles = StyleSheet.create({
   cabinetSidebarUnit: {
   	height: Util.default_u_height,
-  	borderWidth: 1,
-    borderColor: '#000',
+  	
   },
   cabinetSidebarUnitText: {
     textAlign: 'center',

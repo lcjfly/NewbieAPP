@@ -27,6 +27,7 @@ var CabinetSidebarView = React.createClass({
       );
     }
     return {
+      uCount: uCount,
       sidebarUnits: sidebarUnits,
     }
   },
@@ -37,7 +38,7 @@ var CabinetSidebarView = React.createClass({
   
   render() {
     return (
-      <View style={styles.cabinetSidebar}>
+      <View style={[styles.cabinetSidebar,{height: Util.default_u_height * this.state.uCount}]}>
         {this.state.sidebarUnits}
       </View>
     );
@@ -47,6 +48,8 @@ var CabinetSidebarView = React.createClass({
 const styles = StyleSheet.create({
   cabinetSidebar: {
   	flex: 1,
+    borderWidth: 1,
+    borderColor: '#000'
   },
 });
 

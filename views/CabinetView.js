@@ -37,7 +37,7 @@ var CabinetView = React.createClass({
 
     var json = LSM.fakeCabinetData[this.props.name];
     
-    if(!json.length) {
+    if(!json || !json.length) {
       return {};
     }
     var that = this;
@@ -49,7 +49,7 @@ var CabinetView = React.createClass({
       testuDatas.splice(
         uStart-temp,
         uCount,
-        <CabinetUnitView nav={that.props.navigator} uStart={json[i].uStart} uEnd={json[i].uEnd} slotDatas={json[i].slotDatas} unitColumnCount={json[i].unitColumnCount} unitRowCount={json[i].unitRowCount} />
+        <CabinetUnitView nav={that.props.navigator} uStart={uStart} uEnd={uEnd} slotDatas={json[i].slotDatas} unitColumnCount={json[i].unitColumnCount} unitRowCount={json[i].unitRowCount} />
       );
       temp += uCount-1;
     }
@@ -75,7 +75,6 @@ var CabinetView = React.createClass({
           }
       }
     }
-
 
     // 机柜数据从下往上
     testuDatas = testuDatas.reverse();
@@ -124,8 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   cabinetHead: {
-    backgroundColor: '#ccc',
-    height: 30,
+    height: 10,
     alignItems: 'center'
   },
   cabinetName: {

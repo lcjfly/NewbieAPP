@@ -36,7 +36,7 @@ var CabinetUnitRowSlotView = React.createClass({
 
   _showHostDetail: function() {
     var that = this;
-    if(this.state.slotName) {
+    if(this.state.slotId) {
       //Alert.alert('You clicked '+this.state.slotName);
       that.props.nav.push({
         title: this.state.slotName,
@@ -51,7 +51,7 @@ var CabinetUnitRowSlotView = React.createClass({
   render() {
     return (
       <View style={styles.slotViewContainer}>
-      {this.state.slotName == '' ?
+      {!this.state.slotId ?
           <View style={styles.cabinetUnitRowSlot}>
           	<Text style={styles.cabinetUnitRowSlotName}>{this.state.slotName}</Text>
           </View>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   	
   },
   cabinetUnitRowSlotName: {
-    flexDirection: 'column',
+    fontSize: 12
   }
 });
 

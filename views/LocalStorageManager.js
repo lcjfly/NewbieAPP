@@ -44,13 +44,14 @@ var LocalStorageManager = {
           {index: 9, name: 'JG152', type: Util.CABINET_TYPE_OTHER},
           {index: 10, name: 'JG15', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 15, name: 'JG01', type: Util.CABINET_TYPE_NETWORK},
-          {index: 16, name: 'JG02', type: Util.CABINET_TYPE_NETWORK},
-          {index: 17, name: 'JG03', type: Util.CABINET_TYPE_NETWORK},
-          {index: 18, name: 'JG04', type: Util.CABINET_TYPE_NETWORK},
-          {index: 19, name: 'JG05', type: Util.CABINET_TYPE_NETWORK},
-          {index: 20, name: 'JG06', type: Util.CABINET_TYPE_NETWORK},
-          {index: 21, name: 'JG07', type: Util.CABINET_TYPE_NETWORK},
-          {index: 22, name: 'SPM-10', type: Util.CABINET_TYPE_POWER},
+          {index: 16, name: 'JG01', type: Util.CABINET_TYPE_NETWORK},
+          {index: 17, name: 'JG02', type: Util.CABINET_TYPE_NETWORK},
+          {index: 18, name: 'JG03', type: Util.CABINET_TYPE_NETWORK},
+          {index: 19, name: 'JG04', type: Util.CABINET_TYPE_NETWORK},
+          {index: 20, name: 'JG05', type: Util.CABINET_TYPE_NETWORK},
+          {index: 21, name: 'JG06', type: Util.CABINET_TYPE_NETWORK},
+          {index: 22, name: 'JG07', type: Util.CABINET_TYPE_NETWORK},
+          {index: 23, name: 'SPM-10', type: Util.CABINET_TYPE_POWER},
         ]
       ],
       [
@@ -164,7 +165,17 @@ var LocalStorageManager = {
     ],
 
     fakeCabinetData: {
-    	"JG173": [
+    	"JG237": [
+    		{
+    			id: 171,
+		        uStart: 1,
+		        uEnd: 1,
+		        unitColumnCount: 1,
+		        unitRowCount: 1,
+		        slotDatas: [
+		          {index: 0, slotId: 17101, slotName: 'cnsvwshs0519', slotType:'PC'},
+		        ]
+		    },
     		{
     			id: 173,
 		        uStart: 3,
@@ -200,17 +211,31 @@ var LocalStorageManager = {
 		        unitColumnCount: 2,
 		        unitRowCount: 1,
 		        slotDatas: [
-		          {index: 0, slotId: 1734100, slotName: '48芯单模光配', slotType:''},
-		          {index: 1, slotId: 1734101, slotName: 'GP01上联至JG12', slotType:''}
+		          {index: 0, slotName: '48芯单模光配', slotType:''},
+		          {index: 1, slotName: 'GP01上联至JG12', slotType:''}
 		        ]
 		    },
     	]
     },
 
     fakeHostData: {
-    	1732000: {
-    		name: 'rpo01a',
-    		ip: '192.168.1.1'
+    	17101: {
+    		host: {
+	    		name: 'rpo01a',
+	    		serial: 'xxx-xxx-xxx',
+	    		cabinet: 'JG237',
+	    		owner: '张佳麒',
+	    		ip: '10.122.22.162',
+	    		comment: 'no comment'
+	    	},
+	    	network: {
+	    		cabinet: 'JG337',
+	    		switch: 'sb026-016e15',
+	    		switch_port: '1',
+	    		cable_port: 'xx',
+	    		comment: 'no comment'
+	    	}
+
     	}
     }
 
