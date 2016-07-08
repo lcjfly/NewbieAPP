@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   search: {
-    height: 35,
+    height: 40,
     borderWidth: Util.pixel,
     borderColor: '#ccc',
     paddingLeft: 10,

@@ -171,6 +171,11 @@ var RoomCabinetView = React.createClass({
         state: this,
         name: this.props.name
       },
+      // for android
+      params: {
+        state: this,
+        name: this.props.name
+      },
       rightButtonIcon: {uri: Util.base64Icon_menu, scale: 1.5}, 
       onRightButtonPress: this._showActionSheet,
     });

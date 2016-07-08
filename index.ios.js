@@ -135,19 +135,6 @@ var NewbieAPP = React.createClass({
                 {this._addNavigator(Favirate, '收藏')}
               </TabBarIOS.Item>
               <TabBarIOS.Item
-                title="消息"
-                icon={{uri: base64Icon_menu, scale: 1.5}}
-                badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
-                selected={this.state.selectedTab === 'menuTab'}
-                onPress={() => {
-                  this.setState({
-                    selectedTab: 'menuTab',
-                    notifCount: this.state.notifCount + 1,
-                  });
-                }}>
-                {this._addNavigator(Message, '消息')}
-              </TabBarIOS.Item>
-              <TabBarIOS.Item
                 title="搜索"
                 icon={{uri: base64Icon_search, scale: 1.5}}
                 selected={this.state.selectedTab === 'searchTab'}
@@ -158,6 +145,19 @@ var NewbieAPP = React.createClass({
                   });
                 }}>
                 {this._addNavigator(Search, '搜索')}
+              </TabBarIOS.Item>
+              <TabBarIOS.Item
+                title="消息"
+                icon={{uri: base64Icon_menu, scale: 1.5}}
+                badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
+                selected={this.state.selectedTab === 'chatTab'}
+                onPress={() => {
+                  this.setState({
+                    selectedTab: 'chatTab',
+                    notifCount: this.state.notifCount + 1,
+                  });
+                }}>
+                {this._addNavigator(Message, '消息')}
               </TabBarIOS.Item>
               <TabBarIOS.Item
                 title="设置"

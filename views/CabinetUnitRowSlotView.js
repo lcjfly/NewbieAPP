@@ -44,6 +44,10 @@ var CabinetUnitRowSlotView = React.createClass({
         passProps: {
           id: that.state.slotId
         },
+        // for android
+        params: {
+          id: that.state.slotId
+        }
       });
     }
   },

@@ -229,7 +229,7 @@ var LocalStorageManager = {
     },
 
     fakeHostData: {
-    	17101: {
+    	1732000: {
     		host: {
 	    		name: 'rpo01a',
 	    		serial: 'xxx-xxx-xxx',

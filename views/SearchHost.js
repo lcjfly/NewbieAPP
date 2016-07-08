@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   search: {
-    height: 35,
+    height: 40,
     borderWidth: Util.pixel,
     borderColor: '#ccc',
     paddingLeft: 10,

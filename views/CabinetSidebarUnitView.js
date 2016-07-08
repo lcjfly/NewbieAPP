@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   cabinetSidebarUnitText: {
     textAlign: 'center',
-    lineHeight: Util.default_u_height,
+    //lineHeight: Util.default_u_height,
   },
 });
 
