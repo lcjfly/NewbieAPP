@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import {
-  ActivityIndicatorIOS,
   Alert,
   AppRegistry,
   AsyncStorage,
@@ -29,6 +28,7 @@ var Favirate = require('./views/Favirate.js');
 var Message = require('./views/Message.ios.js');
 var Search = require('./views/Search.js');
 var Settings = require('./views/Settings.js');
+var Login = require('./views/Login.js');
 
 
 var base64Icon_home = 'data:image/png;base64,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';
@@ -41,8 +41,8 @@ var NewbieAPP = React.createClass({
   getInitialState: function() {
     return {
       selectedTab: 'homeTab',
-      isIndexShow: false,
-      isLoginShow: true,
+      isIndexShow: true,
+      isLoginShow: false,
       isRegShow: false,
       isLoginLoadingShow: false
     };
@@ -98,131 +98,11 @@ var NewbieAPP = React.createClass({
     />;
   },
 
-  _getUsername: function(val) {
-    var username = val;
+  _loginSuccess: function() {
     this.setState({
-      username: username
-    });
-  },
-
-  _getPassword: function(val) {
-    var password = val;
-    this.setState({
-      password: password
-    });
-  },
-
-  _getEmail: function(val) {
-    var email = val;
-    this.setState({
-      email: email
-    });
-  },
-
-  _clearLoginInputInfo: function() {
-    
-  },
-
-  _showReg: function() {
-    var that = this;
-
-    // hide loginView and show loadingView
-    that.setState({
-      isIndexShow: false,
       isLoginShow: false,
-      isRegShow: true,
-      isLoadingShow: false
-    });
-  },
-
-  _reg: function() {
-    var username = this.state.username;
-    var password = this.state.password;
-    var email = this.state.email;
-    var path = Service.host + Service.reg;
-    var that = this;
-
-    this.setState({
-      isRegingShow: true
-    });
-
-    // reg action
-    Util.post(path, {
-      username: username,
-      password: password,
-      email: email
-    }, function(data) {
-      that.setState({
-        isRegingShow: false
-      });
-
-      if(data.status) {
-        Alert.alert('注册', "注册成功，请返回登录");
-      } else {
-        Alert.alert('注册', data.msg);
-      }
-    });
-  },
-
-  _goToLogin: function() {
-    this.setState({
-      isIndexShow: false,
-      isLoginShow: true,
-      isRegShow: false,
-      isLoadingShow: false
-    });
-  },
-
-  _login: function() {
-    
-    var username = this.state.username;
-    var password = this.state.password;
-    var path = Service.host + Service.login;
-    var that = this;
-
-    // hide loginView and show loadingView
-    that.setState({
-      isIndexShow: false,
-      isLoginShow: false,
-      isRegShow: false,
-      isLoginLoadingShow: true
-    });
-
-    // login action
-    Util.post(path, {
-      username: username,
-      password: password,
-    }, function(data) {
-      if(data.status) {
-        
-        that._clearLoginInputInfo();
-
-        var token = data.data;
-        Util.token = token;
-        
-        // store data locally
-        AsyncStorage.multiSet([
-          ['username', username],
-          ['token', token],
-        ], function(err) {
-          if(!err) {
-            that.setState({
-              isIndexShow: true,
-              isLoginShow: false,
-              isRegShow: false,
-              isLoginLoadingShow: false
-            });
-          }
-        });
-      } else {
-        Alert.alert('登录', data.msg);
-        that.setState({
-          isIndexShow: false,
-          isLoginShow: true,
-          isRegShow: false,
-          isLoginLoadingShow: false
-        });
-      }
+      isIndexShow: true,
+      selectedTab: 'homeTab',
     });
   },
 
@@ -295,104 +175,17 @@ var NewbieAPP = React.createClass({
           </View>:null
         }
         {this.state.isLoginShow ?
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <View style={styles.inputRow}>
-                <Text>用户名</Text>
-                <TextInput ref="usernameInput" style={styles.input} placeholder="请输入用户名" onChangeText={this._getUsername}></TextInput>
-              </View>
-              <View style={styles.inputRow}>
-                <Text>密码</Text>
-                <TextInput ref="passwordInput" style={styles.input} password={true} placeholder="请输入密码" onChangeText={this._getPassword}></TextInput>
-              </View>
-
-              <View style={styles.btnRow}>
-                <TouchableHighlight underlayColor="#fff" style={styles.btn} onPress={this._login}>
-                  <Text style={{color: '#fff'}}>登录</Text>
-                </TouchableHighlight>
-                <TouchableHighlight underlayColor="#fff" style={styles.btn} onPress={this._showReg}>
-                  <Text style={{color: '#fff'}}>新用户</Text>
-                </TouchableHighlight>
-              </View>
-
-              {this.state.isLoginLoadingShow ?
-                <View>
-                  <ActivityIndicatorIOS size="small" color="#268DEF"></ActivityIndicatorIOS>
-                  <Text>登录中...</Text>
-                </View>:null
-              }
-            </View>:null
+            <Login loginSuccess={this._loginSuccess} />:null
         }
-        {this.state.isRegShow ?
-          <View style={styles.regContainer}>
-            <View style={styles.inputRow}>
-              <Text>用户名</Text>
-              <TextInput ref="usernameInput" style={styles.input} placeholder="请输入用户名" onChangeText={this._getUsername}></TextInput>
-            </View>
-            <View style={styles.inputRow}>
-              <Text>邮箱</Text>
-              <TextInput keyboardType="email-address" ref="emailInput" style={styles.input} email={true} placeholder="请输入邮箱" onChangeText={this._getEmail}></TextInput>
-            </View>
-            <View style={styles.inputRow}>
-              <Text>密码</Text>
-              <TextInput ref="passwordInput" style={styles.input} password={true} placeholder="请输入密码" onChangeText={this._getPassword}></TextInput>
-            </View>
-
-            <View style={styles.btnRow}>
-              <TouchableHighlight underlayColor="#fff" style={styles.btn} onPress={this._goToLogin}>
-                <Text style={{color: '#fff'}}>返回登录</Text>
-              </TouchableHighlight>
-              <TouchableHighlight underlayColor="#fff" style={styles.btn} onPress={this._reg}>
-                <Text style={{color: '#fff'}}>注册</Text>
-              </TouchableHighlight>
-            </View>
-          </View>:null
-        }
+        
       </View>
     );
   }
 });
 
 const styles = StyleSheet.create({
-  loginContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  regContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  input: {
-    marginLeft: 10,
-    width: 220,
-    borderWidth: Util.pixel,
-    height: 35,
-    paddingLeft: 8,
-    borderRadius: 5,
-    borderColor: '#ccc'
-  },
-  btnRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  btn: {
-    marginTop: 10,
-    width: 80,
-    height: 35,
-    backgroundColor: '#3BC1FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4
-  }
+  
+  
 });
 
 AppRegistry.registerComponent('NewbieAPP', () => NewbieAPP);

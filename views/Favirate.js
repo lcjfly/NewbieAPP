@@ -103,8 +103,7 @@ var Favirate = React.createClass({
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._fetchFavirates}
-            />}
-            style={styles.container}>
+            />}>
               <View style={styles.hosts}>
                 {this.state.favirateHosts}
                 <View style={{height: 35}} />

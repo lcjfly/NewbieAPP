@@ -12,6 +12,7 @@
     "react-native-communications": "^2.0.0",
     "react-native-gifted-messenger": "^0.1.4",
     "react-native-socketio": "^0.2.0",
+    "react-native-tab-navigator": "^0.3.2",
     "react-native-tableview-simple": "^0.10.1",
     "react-refresh-control": "^2.0.5"
   }

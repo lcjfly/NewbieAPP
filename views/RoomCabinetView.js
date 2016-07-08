@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  ActionSheetIOS,
+  //ActionSheetIOS,
   Alert,
   ScrollView,
   StyleSheet,
@@ -27,7 +27,7 @@ var RoomCabinetView = React.createClass({
 
   getInitialState: function() {
     var color = Util.CABINET_DEFAULT_COLOR;
-    var paddingTop = 0, paddingBottom = 0;
+    var paddingTop = Util.default_room_cabinet_paddingTop, paddingBottom = Util.default_room_cabinet_paddingBottom;
     switch(this.props.type) {
       case Util.CABINET_TYPE_STORAGE_HP_SUN: 
         color = Util.CABINET_COLOR_STORAGE_HP_SUN;
@@ -49,8 +49,8 @@ var RoomCabinetView = React.createClass({
         break;
       case Util.CABINET_TYPE_POWER:
         color = Util.CABINET_COLOR_POWER;
-        paddingTop = 5;
-        paddingBottom = 5;
+        paddingTop *= 2;
+        paddingBottom *= 2;
         break;
         case Util.CABINET_TYPE_OTHER:
         color = Util.CABINET_COLOR_OTHER;
@@ -68,7 +68,7 @@ var RoomCabinetView = React.createClass({
   componentDidMount: function() {
     
   },
-
+  /*
   _showActionSheet: function() {
     var that = this;
     var options = [];
@@ -137,6 +137,7 @@ var RoomCabinetView = React.createClass({
       }
     });
   },
+  */
 
   _showCabinetDetail: function() {
     var that = this;

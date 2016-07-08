@@ -137,7 +137,6 @@ var Settings = React.createClass({
               </Section>
 
               <Section header="版本信息">
-                <Cell cellstyle="RightDetail" title="版本号" detail={ReactNativeAutoUpdater.jsCodeVersion()} />
                 <Cell cellstyle="Basic" title="更新日志" accessory="DisclosureIndicator" onPress={this._gotoVersionLog}/>
                 <Cell cellstyle="Basic" title="报告BUG" accessory="DisclosureIndicator" onPress={this._gotoFeedback}/>
               </Section>
@@ -147,7 +146,7 @@ var Settings = React.createClass({
 	    );
   	}
 });
-
+//<Cell cellstyle="RightDetail" title="版本号" detail={ReactNativeAutoUpdater.jsCodeVersion()} />
 const styles = StyleSheet.create({
   stage: {
     backgroundColor: '#EFEFF4',

@@ -17,7 +17,7 @@ var LocalStorageManager = {
       [
         [
           {index: 0, name: ' ', type: Util.CABINET_TYPE_POWER},
-          {index: 1, name: 'JG173', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
+          {index: 1, name: 'JG178', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 2, name: 'JG179', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 3, name: 'JG180', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 5, name: 'JG17', type: Util.CABINET_TYPE_CABLE},
@@ -174,6 +174,16 @@ var LocalStorageManager = {
 		        unitRowCount: 1,
 		        slotDatas: [
 		          {index: 0, slotId: 17101, slotName: 'cnsvwshs0519', slotType:'PC'},
+		        ]
+		    },
+		    {
+    			id: 172,
+		        uStart: 2,
+		        uEnd: 2,
+		        unitColumnCount: 1,
+		        unitRowCount: 1,
+		        slotDatas: [
+		          {index: 0, slotId: 17201, slotName: 'cnsvwshs0520', slotType:'PC'},
 		        ]
 		    },
     		{
