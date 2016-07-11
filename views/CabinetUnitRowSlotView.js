@@ -115,11 +115,9 @@ var CabinetUnitRowSlotView = React.createClass({
         title: this.state.slotName,
         component: HostView,
         passProps: {
-          id: that.state.slotId
-        },
-        // for android
-        params: {
-          id: that.state.slotId
+          host : {
+            id: that.state.slotId
+          }
         },
         rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 
         onRightButtonPress: this._showActionSheet,

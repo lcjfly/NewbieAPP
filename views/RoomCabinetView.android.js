@@ -26,7 +26,7 @@ var RoomCabinetView = React.createClass({
   getInitialState: function() {
     var color = Util.CABINET_DEFAULT_COLOR;
     var paddingTop = Util.default_room_cabinet_paddingTop, paddingBottom = Util.default_room_cabinet_paddingBottom;
-    switch(this.props.type) {
+    switch(this.props.data.type) {
       case Util.CABINET_TYPE_STORAGE_HP_SUN: 
         color = Util.CABINET_COLOR_STORAGE_HP_SUN;
         break;
@@ -55,8 +55,8 @@ var RoomCabinetView = React.createClass({
         break;
     }
     return {
-    	name: this.props.name,
-      type: this.props.type,
+    	name: this.props.data.name,
+      type: this.props.data.type,
       color: color,
       paddingTop: paddingTop,
       paddingBottom: paddingBottom
@@ -66,12 +66,12 @@ var RoomCabinetView = React.createClass({
   componentDidMount: function() {
     
   },
-  /*
+  
   _showActionSheet: function() {
     var that = this;
     var options = [];
     var events = [];
-
+    /*
     Util.isFaviratedCabinet(that.props.data.id, function(err, isFavirated) {
       if(!err) {
         if(!isFavirated) {
@@ -134,8 +134,9 @@ var RoomCabinetView = React.createClass({
         console.log('err:\n\n' + err);
       }
     });
+    */
   },
-  */
+  
 
   _showCabinetDetail: function() {
     var that = this;
@@ -163,19 +164,13 @@ var RoomCabinetView = React.createClass({
     */
 
     this.props.nav.push({
-      title: this.props.name,
+      title: this.props.data.name,
       component: CabinetView,
       passProps: {
+        cabinet: this.props.data,
         state: this,
-        name: this.props.name
-      },
-      // for android
-      params: {
-        state: this,
-        name: this.props.name
       },
       rightButtonIcon: {uri: Util.base64Icon_menu, scale: 1.5}, 
-      onRightButtonPress: this._showActionSheet,
     });
   },
 

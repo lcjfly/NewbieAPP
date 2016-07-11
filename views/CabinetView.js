@@ -34,7 +34,7 @@ var CabinetView = React.createClass({
         <CabinetUnitView uStart={i} uEnd={i} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
     }
 
-    var json = LSM.fakeCabinetData[this.props.name];
+    var json = LSM.fakeCabinetData[this.props.cabinet.id];
     
     if(!json || !json.length) {
       return {};
@@ -80,7 +80,7 @@ var CabinetView = React.createClass({
 
     return {
       uCount: uCount,
-      name: this.props.name,
+      name: this.props.cabinet.name,
       uDatas: testuDatas, //this.props.uDatas,
     }
   },

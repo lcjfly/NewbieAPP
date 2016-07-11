@@ -48,7 +48,7 @@ var RoomView = React.createClass({
 
   render() {
     return (
-        <ScrollView ref="_scrollView" horizontal={true} maximumZoomScale={2} minimumZoomScale={0.5} contentContainerStyle={styles.container}>
+        <ScrollView ref="_scrollView" horizontal={false} maximumZoomScale={2} minimumZoomScale={0.5} contentContainerStyle={styles.container}>
           {this.state.cabinetColumnPairViews}
         </ScrollView>
     );

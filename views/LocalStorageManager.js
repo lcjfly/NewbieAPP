@@ -165,7 +165,7 @@ var LocalStorageManager = {
     ],
 
     fakeCabinetData: {
-    	"JG178": [
+    	178: [
     		{
     			id: 171,
 		        uStart: 1,

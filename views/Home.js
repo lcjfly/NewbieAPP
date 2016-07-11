@@ -26,9 +26,9 @@ var Home = React.createClass({
   render() {
     var that = this;
       return (
-        <ScrollView ref="_scrollView" maximumZoomScale={2} minimumZoomScale={0.5} contentContainerStyle={styles.container}>
+        <ScrollView ref="_scrollView" horizontal={true} maximumZoomScale={2} minimumZoomScale={0.5} contentContainerStyle={styles.container}>
           <RoomView nav={that.props.navigator} />
-          </ScrollView>
+        </ScrollView>
       );
     }
 });

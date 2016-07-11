@@ -22,7 +22,7 @@ var Cell = ReactNativeTableviewSimple.Cell;
 var HostView = React.createClass({
 
   getInitialState: function() {
-    var host = LSM.fakeHostData[this.props.id] || {host: {}, network: {}};
+    var host = LSM.fakeHostData[this.props.host.id] || {host: {}, network: {}};
     return {
       host: host
     }
