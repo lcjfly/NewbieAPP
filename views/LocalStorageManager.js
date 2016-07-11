@@ -16,9 +16,9 @@ var LocalStorageManager = {
     fakeCabinetColumnPairData: [
       [
         [
-          {index: 0, name: ' ', type: Util.CABINET_TYPE_POWER},
-          {index: 1, name: 'JG178', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
-          {index: 2, name: 'JG179', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
+          {id: 0, index: 0, name: ' ', type: Util.CABINET_TYPE_POWER},
+          {id: 178, index: 1, name: 'JG178', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
+          {id: 179, index: 2, name: 'JG179', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 3, name: 'JG180', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 5, name: 'JG17', type: Util.CABINET_TYPE_CABLE},
           {index: 6, name: 'JG290', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
@@ -165,7 +165,7 @@ var LocalStorageManager = {
     ],
 
     fakeCabinetData: {
-    	"JG237": [
+    	"JG178": [
     		{
     			id: 171,
 		        uStart: 1,
@@ -229,9 +229,9 @@ var LocalStorageManager = {
     },
 
     fakeHostData: {
-    	1732000: {
+    	1731100: {
     		host: {
-	    		name: 'rpo01a',
+	    		name: 'rco01a',
 	    		serial: 'xxx-xxx-xxx',
 	    		cabinet: 'JG237',
 	    		owner: '张佳麒',
@@ -246,7 +246,25 @@ var LocalStorageManager = {
 	    		comment: 'no comment'
 	    	}
 
-    	}
+    	},
+      1732000: {
+        host: {
+          name: 'rpo01a',
+          serial: 'xxx-xxx-xxx',
+          cabinet: 'JG237',
+          owner: '张佳麒',
+          ip: '10.122.22.162',
+          comment: 'no comment'
+        },
+        network: {
+          cabinet: 'JG337',
+          switch: 'sb026-016e15',
+          switch_port: '1',
+          cable_port: 'xx',
+          comment: 'no comment'
+        }
+
+      }
     }
 
 }

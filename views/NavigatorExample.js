@@ -3,192 +3,92 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
-  View,
-  Navigator,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  View,
+  Image
 } = ReactNative;
-var BreadcrumbNavSample = require('./BreadcrumbNavSample');
-var NavigationBarSample = require('./NavigationBarSample');
-var JumpingNavSample = require('./JumpingNavSample');
 
-class NavButton extends React.Component {
-  render() {
-    return (
-      <TouchableHighlight
-        style={styles.button}
-        underlayColor="#B5B5B5"
-        onPress={this.props.onPress}>
-        <Text style={styles.buttonText}>{this.props.text}</Text>
-      </TouchableHighlight>
-    );
-  }
-}
-
-class NavMenu extends React.Component {
-  render() {
-    return (
-      <ScrollView style={styles.scene}>
-        <Text style={styles.messageText}>{this.props.message}</Text>
-        <NavButton
-          onPress={() => {
-            this.props.navigator.push({
-              message: 'Swipe right to dismiss',
-              sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            });
-          }}
-          text="Float in from right"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.push({
-              message: 'Swipe down to dismiss',
-              sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            });
-          }}
-          text="Float in from bottom"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.pop();
-          }}
-          text="Pop"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.popToTop();
-          }}
-          text="Pop to top"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.push({ id: 'navbar' });
-          }}
-          text="Navbar Example"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.push({ id: 'jumping' });
-          }}
-          text="Jumping Example"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.navigator.push({ id: 'breadcrumbs' });
-          }}
-          text="Breadcrumbs Example"
-        />
-        <NavButton
-          onPress={() => {
-            this.props.onExampleExit();
-          }}
-          text="Exit <Navigator> Example"
-        />
-      </ScrollView>
-    );
-  }
-}
-
-var TabBarExample = React.createClass({
-
-  statics: {
-    title: '<Navigator>',
-    description: 'JS-implemented navigation',
-  },
-
-  renderScene: function(route, nav) {
-    switch (route.id) {
-      case 'navbar':
-        return <NavigationBarSample navigator={nav} />;
-      case 'breadcrumbs':
-        return <BreadcrumbNavSample navigator={nav} />;
-      case 'jumping':
-        return <JumpingNavSample navigator={nav} />;
-      default:
-        return (
-          <NavMenu
-            message={route.message}
-            navigator={nav}
-            onExampleExit={this.props.onExampleExit}
-          />
-        );
-    }
-  },
+var NavigatorExample = React.createClass({
 
   render: function() {
-    var _scrollView: ScrollView;
+    var _scrollView= ScrollView;
     return (
-      <View style={{flex: 1}}>
+      <View>
         <ScrollView
-          horizontal={true}
-          style={{height: 300,width: 1000, backgroundColor: 'red'}}>
-          <Text>sss</Text>
+          ref={(scrollView) => { _scrollView = scrollView; }}
+          automaticallyAdjustContentInsets={false}
+          onScroll={() => { console.log('onScroll!'); }}
+          scrollEventThrottle={200}
+          style={styles.scrollView}>
+          {THUMBS.map(createThumbRow)}
         </ScrollView>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => { _scrollView.scrollTo({y: 0}); }}>
+          <Text>Scroll to top</Text>
+        </TouchableOpacity>
       </View>
     );
-  },
-
-
-  componentWillUnmount: function() {
-    this._listeners && this._listeners.forEach(listener => listener.remove());
-  },
-
-  _setNavigatorRef: function(navigator) {
-    if (navigator !== this._navigator) {
-      this._navigator = navigator;
-
-      if (navigator) {
-        var callback = (event) => {
-          console.log(
-            `TabBarExample: event ${event.type}`,
-            {
-              route: JSON.stringify(event.data.route),
-              target: event.target,
-              type: event.type,
-            }
-          );
-        };
-        // Observe focus change events from the owner.
-        this._listeners = [
-          navigator.navigationContext.addListener('willfocus', callback),
-          navigator.navigationContext.addListener('didfocus', callback),
-        ];
-      }
-    }
-  },
-});
-
-var styles = StyleSheet.create({
-  messageText: {
-    fontSize: 17,
-    fontWeight: '500',
-    padding: 15,
-    marginTop: 50,
-    marginLeft: 15,
-  },
-  container: {
-    flex: 1,
-  },
-  button: {
-    backgroundColor: 'white',
-    padding: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#CDCDCD',
-  },
-  buttonText: {
-    fontSize: 17,
-    fontWeight: '500',
-  },
-  scene: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#EAEAEA',
   }
 });
 
-TabBarExample.external = true;
+var Thumb = React.createClass({
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return false;
+  },
+  render: function() {
+    return (
+      <View style={styles.button}>
+        <Image style={styles.img} source={{uri:this.props.uri}} />
+      </View>
+    );
+  }
+});
 
-module.exports = TabBarExample;
+var THUMBS = ['https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-ash3/t39.1997/p128x128/851549_767334479959628_274486868_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851561_767334496626293_1958532586_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-ash3/t39.1997/p128x128/851579_767334503292959_179092627_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851589_767334513292958_1747022277_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851563_767334559959620_1193692107_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851593_767334566626286_1953955109_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851591_767334523292957_797560749_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851567_767334529959623_843148472_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851548_767334489959627_794462220_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851575_767334539959622_441598241_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-ash3/t39.1997/p128x128/851573_767334549959621_534583464_n.png', 'https://fbcdn-dragon-a.akamaihd.net/hphotos-ak-prn1/t39.1997/p128x128/851583_767334573292952_1519550680_n.png'];
+THUMBS = THUMBS.concat(THUMBS); // double length of THUMBS
+var createThumbRow = (uri, i) => <Thumb key={i} uri={uri} />;
+
+var styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: '#6A85B1',
+    height: 500,
+  },
+  horizontalScrollView: {
+    height: 120,
+  },
+  containerPage: {
+    height: 50,
+    width: 50,
+    backgroundColor: '#527FE4',
+    padding: 5,
+  },
+  text: {
+    fontSize: 20,
+    color: '#888888',
+    left: 80,
+    top: 20,
+    height: 40,
+  },
+  button: {
+    margin: 7,
+    padding: 5,
+    alignItems: 'center',
+    backgroundColor: '#eaeaea',
+    borderRadius: 3,
+  },
+  buttonContents: {
+    flexDirection: 'row',
+    width: 64,
+    height: 64,
+  },
+  img: {
+    width: 64,
+    height: 64,
+  }
+});
+
+module.exports = NavigatorExample;

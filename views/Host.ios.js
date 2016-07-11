@@ -110,9 +110,10 @@ var Host = React.createClass({
   _loadPage: function(data) {
   	var host = data;
   	this.props.nav.push({
-  		title: this.props.hostname,
+  		name: this.props.hostname,
   		component: this.props.component,
   		passProps: {
+        id: host.id,
   			host: host
   		},
       rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 

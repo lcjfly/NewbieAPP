@@ -16,8 +16,6 @@ var Service = require('./service');
 var Util = require('./util');
 var CabinetView = require('./CabinetView');
 
-
-
 /*
 * 机房机柜视图
 * name: 机柜名称 string

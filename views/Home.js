@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -25,9 +26,9 @@ var Home = React.createClass({
   render() {
     var that = this;
       return (
-        <View style={styles.container}>
+        <ScrollView ref="_scrollView" maximumZoomScale={2} minimumZoomScale={0.5} contentContainerStyle={styles.container}>
           <RoomView nav={that.props.navigator} />
-        </View>
+          </ScrollView>
       );
     }
 });

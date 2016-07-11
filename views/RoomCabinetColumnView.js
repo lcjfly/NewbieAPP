@@ -27,12 +27,13 @@ var RoomCabinetColumnView = React.createClass({
   	// 初始化一列机柜默认数据
   	var cabinetCount = this.props.cabinetCount ? this.props.cabinetCount : Util.default_cabinet_count_per_column;
   	for(var i=0;i<cabinetCount;i++) {
+      var defaultRoomCabinetViewData = {name: ' ', type: ''};
   		roomCabinetViews.push(
-  			<RoomCabinetView nav={that.props.nav} name=" " type=""/>);
+  			<RoomCabinetView nav={that.props.nav} data={defaultRoomCabinetViewData} />);
   	}
 
   	for(var i=0;i<roomCabinetColumnDatas.length;i++) {
-  		roomCabinetViews[roomCabinetColumnDatas[i].index] = <RoomCabinetView nav={that.props.nav} name={roomCabinetColumnDatas[i].name} type={roomCabinetColumnDatas[i].type} />;
+  		roomCabinetViews[roomCabinetColumnDatas[i].index] = <RoomCabinetView nav={that.props.nav} data={roomCabinetColumnDatas[i]} />;
   	}
     return {
     	roomCabinetViews: roomCabinetViews

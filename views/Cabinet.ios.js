@@ -106,10 +106,11 @@ var Cabinet = React.createClass({
   _loadPage: function(data) {
   	var cabinet = data;
   	this.props.nav.push({
-  		title: this.props.name,
+  		name: this.props.name,
   		component: this.props.component,
   		passProps: {
-  			cabinet: cabinet
+  			cabinet: cabinet,
+        name: this.props.name
   		},
       rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 
       onRightButtonPress: this._showActionSheet,

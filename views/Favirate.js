@@ -63,7 +63,7 @@ var Favirate = React.createClass({
               component={HostView}
               hostname={fHosts[i].hostname}
               ip={fHosts[i].ip}
-             />
+            />
           );
           fHostIds.push(fHosts[i].id);
         }
