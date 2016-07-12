@@ -48,33 +48,34 @@ var Host = React.createClass({
 
   _addFavirate: function() {
     var that = this;
-    var path = Service.host + Service.favirateHost + this.props.data.id;
-    Util.post(path, { }, function(data) {
-      if(data.status) {
-        that.state.favirateText = Util.TEXT_FAVIRATE_REMOVE;
-        that.state.onFavirateText = that._cancelFavirate;
 
-        that.props.nav.replace({
-          title: that.props.data.name,
-          component: HostView,
-          passProps: {
-            host: that.props.data,
-            state: that,
-          },
-          favirateText: that.state.favirateText,
-          onFavirateText: that.state.onFavirateText
-        });
-      } else {
-        Alert.alert('添加收藏失败:'+data.msg);
-      }
+    LSM.addFavirateHost(this.props.data.id, function(err) {
+        if(!err) {
+          that.state.favirateText = Util.TEXT_FAVIRATE_REMOVE;
+          that.state.onFavirateText = that._cancelFavirate;
+
+          that.props.nav.replace({
+            title: that.props.data.name,
+            component: HostView,
+            passProps: {
+              host : {
+                host: that.props.data,
+                state: that,
+              }
+            },
+            favirateText: that.state.favirateText,
+            onFavirateText: that.state.onFavirateText
+          });
+        } else {
+          Alert.alert('添加收藏失败:'+err);
+        }
     });
   },
 
   _cancelFavirate: function() {
     var that = this;
-    var path = Service.host + Service.favirateHost + this.props.data.id;
-    Util.delete(path, { }, function(data) {
-      if(data.status) {
+    LSM.removeFavirateHost(this.props.data.id, function(err) {
+      if(!err) {
         that.state.favirateText = Util.TEXT_FAVIRATE_ADD;
         that.state.onFavirateText = that._addFavirate;
 
@@ -89,7 +90,7 @@ var Host = React.createClass({
           onFavirateText: that.state.onFavirateText
         });
       } else {
-        Alert.alert('取消收藏失败:'+data.msg);
+        Alert.alert('取消收藏失败:'+err);
       }
     });
   },

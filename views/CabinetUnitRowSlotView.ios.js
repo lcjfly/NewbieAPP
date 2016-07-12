@@ -49,12 +49,11 @@ var CabinetUnitRowSlotView = React.createClass({
         if(!isFavirated) {
           events.push(function() {
             // add favirate
-            var path = Service.host + Service.favirateHost + that.props.slotId;
-            Util.post(path, { }, function(data) {
-              if(data.status) {
+            LSM.addFavirateHost(that.props.slotId, function(err) {
+              if(!err) {
                 Alert.alert('添加收藏成功');
               } else {
-                Alert.alert('添加收藏失败');
+                Alert.alert(err);
               }
             });
           });
@@ -75,14 +74,11 @@ var CabinetUnitRowSlotView = React.createClass({
         } else {
           events.push(function() {
             // cancel favirate
-            var path = Service.host + Service.favirateHost + that.props.slotId;
-            Util.delete(path, { }, function(data) {
-              if(data.status) {
+            LSM.removeFavirateHost(that.props.slotId, function(err) {
+              if(!err) {
                 Alert.alert('取消收藏成功');
-                
               } else {
-                console.log('add favirate return:'+data.msg);
-                Alert.alert('取消收藏失败');
+                Alert.alert(err);
               }
             });
           });

@@ -48,12 +48,11 @@ var Host = React.createClass({
         if(!isFavirated) {
           events.push(function() {
             // add favirate
-            var path = Service.host + Service.favirateHost + that.props.data.id;
-            Util.post(path, { }, function(data) {
-              if(data.status) {
+            LSM.addFavirateHost(that.props.data.id, function(err) {
+              if(!err) {
                 Alert.alert('添加收藏成功');
               } else {
-                Alert.alert('添加收藏失败');
+                Alert.alert(err);
               }
             });
           });
@@ -74,14 +73,11 @@ var Host = React.createClass({
         } else {
           events.push(function() {
             // cancel favirate
-            var path = Service.host + Service.favirateHost + that.props.data.id;
-            Util.delete(path, { }, function(data) {
-              if(data.status) {
+            LSM.removeFavirateHost(that.props.data.id, function(err) {
+              if(!err) {
                 Alert.alert('取消收藏成功');
-                
               } else {
-                console.log('add favirate return:'+data.msg);
-                Alert.alert('取消收藏失败');
+                Alert.alert(err);
               }
             });
           });
