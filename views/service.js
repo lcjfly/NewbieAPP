@@ -12,6 +12,7 @@ var Service = {
 	favirateHost: '/user/favirate/host/',
 	favirateCabinet: '/user/favirate/cabinet/',
 
+	getCabinetById: '/cabinet/',
 	getHostById: '/host/',
 
 	version: '/version/',

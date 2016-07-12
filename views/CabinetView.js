@@ -91,8 +91,8 @@ var CabinetView = React.createClass({
   
   render() {
     return (
-        <ScrollView style={styles.scrollView} maximumZoomScale={2}>
-        	<View style={styles.cabinet}>
+        <ScrollView style={styles.scrollView} maximumZoomScale={2}  minimumZoomScale={0.5}>
+          <View style={styles.cabinet}>
         		<View style={styles.cabinetHead}>
               <Text style={styles.cabinetName}></Text>
             </View>

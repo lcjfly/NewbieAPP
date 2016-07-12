@@ -15,8 +15,7 @@ var {
 var Service = require('./service');
 var Util = require('./util');
 var CabinetView = require('./CabinetView');
-
-
+var LSM = require('./LocalStorageManager');
 
 /*
 * 机房机柜视图
@@ -74,7 +73,7 @@ var RoomCabinetView = React.createClass({
     var options = [];
     var events = [];
 
-    Util.isFaviratedCabinet(that.props.data.id, function(err, isFavirated) {
+    LSM.isFaviratedCabinet(that.props.data.id, function(err, isFavirated) {
       if(!err) {
         if(!isFavirated) {
           events.push(function() {

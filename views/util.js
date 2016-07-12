@@ -69,46 +69,6 @@ var Util = {
 	    });
 	},
 
-	setLocalFavirates: function(hostIds, cabinetIds) {
-		AsyncStorage.multiSet([
-          [Service.LS_F_HOSTIDS, JSON.stringify(hostIds)],
-          [Service.LS_F_CABINETIDS, JSON.stringify(cabinetIds)],
-        ], function(err) {
-          if(err) {
-          }else {
-          }
-        });
-	},
-
-	isFaviratedHost: function(hostid, callback) {
-		AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
-	      if(!err) {
-	      	var fHostIds = value;
-	      	if(fHostIds.indexOf(hostid) != -1) {
-	      		callback(null, true)	
-	      	} else {
-	      		callback(null, false)
-	      	}
-	      } else {
-	      	console.log('isFaviratedHost failed \n\n');
-	      }
-	  });
-	},
-
-	isFaviratedCabinet: function(cabinetid, callback) {
-		AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
-	      if(!err) {
-	      	var fCabinetIds = value;
-	      	console.log('fCabinetIds'+fCabinetIds);
-	      	if(fCabinetIds.indexOf(cabinetid) != -1) {
-	      		callback(null, true)	
-	      	} else {
-	      		callback(null, false)
-	      	}
-	      }
-	  });
-	},
-
 	//key
 	key: 'keyxxx',
 
@@ -142,6 +102,9 @@ var Util = {
 	CABINET_COLOR_CABLE: '#aaa',
 	CABINET_COLOR_POWER: '#808080',
 	CABINET_COLOR_OTHER: '#86a6d9',
+
+	TEXT_FAVIRATE_ADD: '加入收藏',
+	TEXT_FAVIRATE_REMOVE: '移除'
 
 }
 

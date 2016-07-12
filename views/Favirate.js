@@ -18,6 +18,7 @@ var Host = require('./Host');
 var HostView = require('./HostView');
 var Cabinet = require('./Cabinet');
 var CabinetView = require('./CabinetView');
+var LocalStorageManager = require('./LocalStorageManager');
 
 var Favirate = React.createClass({
   getInitialState: function() {
@@ -33,7 +34,7 @@ var Favirate = React.createClass({
   },
 
   _fetchFavirates: function() {
-    var path = Service.host + Service.favirate;
+    
     var results = [];
     var that = this;
     var hosts = [];
@@ -43,16 +44,13 @@ var Favirate = React.createClass({
       refreshing: true
     });
 
-    // favirate action
-    Util.get(path, {}, function(data) {
-      if(data.status) {
-        
+    LocalStorageManager.getFavirates(function(err, favirates) {
+
         that.setState({
           refreshing: false
         });
 
-        results = data.data;
-        var fHosts = results.hosts;
+        var fHosts = favirates.hosts;
         var fHostIds = [];
 
         for(var i=0;i<fHosts.length;i++) {
@@ -61,14 +59,14 @@ var Favirate = React.createClass({
               data={fHosts[i]}
               nav={that.props.navigator}
               component={HostView}
-              hostname={fHosts[i].hostname}
+              hostname={fHosts[i].host.name}
               ip={fHosts[i].ip}
             />
           );
           fHostIds.push(fHosts[i].id);
         }
 
-        var fCabinets = results.cabinets;
+        var fCabinets = favirates.cabinets;
         var fCabinetIds = [];
         for(var i=0;i<fCabinets.length;i++) {
           cabinets.push(
@@ -81,14 +79,10 @@ var Favirate = React.createClass({
           );
           fCabinetIds.push(fCabinets[i].id);
         }
-        Util.setLocalFavirates(fHostIds, fCabinetIds);
         that.setState({
           favirateHosts: hosts,
           favirateCabinets: cabinets
         });
-      } else {
-        Alert.alert('收藏', data.msg);
-      }
     });
   },
 

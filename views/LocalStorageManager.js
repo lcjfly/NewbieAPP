@@ -12,7 +12,7 @@ var {
 
 var LocalStorageManager = {
 
-	// fake data
+	// fake room data
     fakeCabinetColumnPairData: [
       [
         [
@@ -265,7 +265,228 @@ var LocalStorageManager = {
         }
 
       }
-    }
+    },
+
+    cachedData: {
+      cabinets: {},
+      hosts:{},
+      chats:[]
+    },
+
+    getCabinetById(cabinetId, callback) {
+      var path = Service.host + Service.getCabinetById+cabinetId;
+      Util.post(path, {}, function(data) {
+        if(data.status) {
+          cabinet = data.data;
+          // cache
+          LocalStorageManager.cachedData.cabinets[cabinet.id] = cabinet;
+          callback(null, cabinet);
+        } else {
+          callback(1, null);
+        }
+      });
+    },
+
+    getHostById(hostId, callback) {
+      var path = Service.host + Service.getHostById+hostId;
+      Util.get(path, {}, function(data) {
+        if(data.status) {
+          host = data.data;
+          // cache
+          LocalStorageManager.cachedData.hosts[host.id] = host;
+          callback(null, host);
+        } else {
+          callback(1, null);
+        }
+      });
+    },
+
+    /*
+    *
+    * favirate
+    *
+    */
+    _setFavirates: function(hostIds, cabinetIds) {
+      AsyncStorage.multiSet([
+        [Service.LS_F_HOSTIDS, JSON.stringify(hostIds)],
+          [Service.LS_F_CABINETIDS, JSON.stringify(cabinetIds)],
+      ], function(err) {
+        if(err) {
+        }else {
+        }
+      });
+    },
+
+    getFavirates: function(callback) {
+      var path = Service.host + Service.favirate;
+      Util.get(path, {}, function(data) {
+        if(data.status) {
+          callback(null, data.data);
+
+          var fHosts = data.data.hosts;
+          var fHostIds = [];
+
+          for(var i=0;i<fHosts.length;i++) {
+            fHostIds.push(fHosts[i].id);
+          }
+
+          var fCabinets = data.data.cabinets;
+          var fCabinetIds = [];
+          for(var i=0;i<fCabinets.length;i++) {
+            fCabinetIds.push(fCabinets[i].id);
+          }
+          
+          LocalStorageManager._setFavirates(fHostIds, fCabinetIds);
+        } else {
+          callback(data.msg);
+        }
+      });
+    },
+
+    addFavirateCabinet: function(cabinetId, callback) {
+
+      var path = Service.host + Service.favirateCabinet + cabinetId;
+      Util.post(path, { }, function(data) {
+        if(data.status) {
+          callback(null);
+
+          // cache
+          var fCabinetIds = null;
+          AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+            if(!err) {
+              fCabinetIds = value;
+              if(fCabinetIds.indexOf(cabinetId) != -1) {
+
+              } else {
+                fCabinetIds[fCabinetIds.length] = cabinetId;
+              }
+            } else {
+              console.log('addFavirateCabinet failed \n\n');
+            }
+          });
+          AsyncStorage.setItem(Service.LS_F_CABINETIDS, fCabinetIds);
+        } else {
+          callback(data.msg);
+        }
+      });
+
+      
+    },
+
+    removeFavirateCabinet: function(cabinetId, callback) {
+
+      var path = Service.host + Service.favirateCabinet + cabinetId;
+      Util.delete(path, { }, function(data) {
+        if(data.status) {
+          callback(null);
+
+          // cache
+          var fCabinetIds = null;
+          AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+            if(!err) {
+              fCabinetIds = eval(value);
+              var index = fCabinetIds.indexOf(cabinetId);
+              if(index != -1) {
+                fCabinetIds.splice(index, 1);
+              }
+            } else {
+              console.log('removeFavirateCabinet failed \n\n');
+            }
+          });
+          AsyncStorage.setItem(Service.LS_F_CABINETIDS, fCabinetIds);
+        } else {
+          callback(data.s);
+        }
+      });
+      
+    },
+
+    addFavirateHost: function(hostId, callback) {
+
+      var path = Service.host + Service.favirateHost + hostId;
+      Util.post(path, { }, function(data) {
+        if(data.status) {
+          callback(null);
+
+          // cache
+          var fHostIds = null;
+          AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
+            if(!err) {
+              fHostIds = value;
+              if(fHostIds.indexOf(hostId) != -1) {
+
+              } else {
+                fHostIds[fHostIds.length] = hostId;
+              }
+            } else {
+              console.log('addFavirateHost failed \n\n');
+            }
+          });
+          AsyncStorage.setItem(Service.LS_F_HOSTIDS, fHostIds);
+        } else {
+          callback(data.msg);
+        }
+      });
+
+      
+    },
+
+    removeFavirateHost: function(hostId, callback) {
+
+      var path = Service.host + Service.favirateHost + hostId;
+      Util.delete(path, { }, function(data) {
+        if(data.status) {
+          callback(null);
+
+          // cache
+          var fHostIds = null;
+          AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+            if(!err) {
+              fHostIds = eval(value);
+              var index = fHostIds.indexOf(hostId);
+              if(index != -1) {
+                fHostIds.splice(index, 1);
+              }
+            } else {
+              console.log('removeFavirateHost failed \n\n');
+            }
+          });
+          AsyncStorage.setItem(Service.LS_F_HOSTIDS, fHostIds);
+        } else {
+          callback(data.msg);
+        }
+      });
+      
+    },
+
+    isFaviratedHost: function(hostid, callback) {
+      AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
+          if(!err) {
+            var fHostIds = value;
+            if(fHostIds.indexOf(hostid) != -1) {
+              callback(null, true)  
+            } else {
+              callback(null, false)
+            }
+          } else {
+            console.log('isFaviratedHost failed \n\n');
+          }
+      });
+    },
+
+    isFaviratedCabinet: function(cabinetid, callback) {
+      AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+          if(!err) {
+            var fCabinetIds = value;
+            console.log('fCabinetIds'+fCabinetIds);
+            if(fCabinetIds.indexOf(cabinetid) != -1) {
+              callback(null, true)  
+            } else {
+              callback(null, false)
+            }
+          }
+      });
+    },
 
 }
 

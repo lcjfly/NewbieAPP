@@ -15,6 +15,7 @@ var {
 var Service = require('./service');
 var Util = require('./util');
 var CabinetView = require('./CabinetView');
+var LSM = require('./LocalStorageManager');
 
 /*
 * 机房机柜视图
@@ -54,7 +55,10 @@ var RoomCabinetView = React.createClass({
         color = Util.CABINET_COLOR_OTHER;
         break;
     }
+
     return {
+      favirateText: "",
+      onFavirateText: {},
     	name: this.props.data.name,
       type: this.props.data.type,
       color: color,
@@ -67,111 +71,84 @@ var RoomCabinetView = React.createClass({
     
   },
   
-  _showActionSheet: function() {
+  _addFavirate: function() {
     var that = this;
-    var options = [];
-    var events = [];
-    /*
-    Util.isFaviratedCabinet(that.props.data.id, function(err, isFavirated) {
+
+    LSM.addFavirateCabinet(this.props.data.id, function(err) {
       if(!err) {
-        if(!isFavirated) {
-          events.push(function() {
-            // add favirate
-            var path = Service.host + Service.favirateCabinet + that.props.data.id;
-            Util.post(path, { }, function(data) {
-              if(data.status) {
-                Alert.alert('添加收藏成功');
-              } else {
-                Alert.alert('添加收藏失败');
-              }
-            });
-          });
-          options.push('加入收藏');
-          options.push('分享给大家');
-          options.push('取消');
+        that.state.favirateText = Util.TEXT_FAVIRATE_REMOVE;
+        that.state.onFavirateText = that._cancelFavirate;
 
-          events.push(function() {
-            Alert.alert('share');
-          });
-          ActionSheetIOS.showActionSheetWithOptions({
-              options: options,
-              cancelButtonIndex: options.length - 1
-            }, function(index) {
-              events[index] && events[index]();
-            }
-          );
-        } else {
-          events.push(function() {
-            // cancel favirate
-            var path = Service.host + Service.favirateCabinet + that.props.data.id;
-            Util.delete(path, { }, function(data) {
-              if(data.status) {
-                Alert.alert('取消收藏成功');
-                
-              } else {
-                console.log('add favirate return:'+data.msg);
-                Alert.alert('取消收藏失败');
-              }
-            });
-          });
-          options.push('取消收藏');
-          options.push('分享给大家');
-          options.push('取消');
-
-          events.push(function() {
-            Alert.alert('share');
-          });
-
-          ActionSheetIOS.showActionSheetWithOptions({
-              options: options,
-              cancelButtonIndex: options.length - 1
-            }, function(index) {
-              events[index] && events[index]();
-            }
-          );
-        }
+        that.props.nav.replace({
+          title: that.props.data.name,
+          component: CabinetView,
+          passProps: {
+            cabinet: that.props.data,
+            state: that,
+          },
+          favirateText: that.state.favirateText,
+          onFavirateText: that.state.onFavirateText
+        });
       } else {
-        console.log('err:\n\n' + err);
+        Alert.alert('添加收藏失败:'+err);
       }
     });
-    */
+      
+  },
+
+  _cancelFavirate: function() {
+    var that = this;
+
+    LSM.removeFavirateCabinet(this.props.data.id, function(err) {
+      if(!err) {
+        // update cache data
+        LSM.removeFavirateCabinet(that.props.data.id);
+        
+        that.state.favirateText = Util.TEXT_FAVIRATE_ADD;
+        that.state.onFavirateText = that._addFavirate;
+
+        that.props.nav.replace({
+          title: that.props.data.name,
+          component: CabinetView,
+          passProps: {
+            cabinet: that.props.data,
+            state: that,
+          },
+          favirateText: that.state.favirateText,
+          onFavirateText: that.state.onFavirateText
+        });
+      } else {
+        Alert.alert('取消收藏失败:'+err);
+      }
+    });
   },
   
 
   _showCabinetDetail: function() {
     var that = this;
-    // search action
-    /*
-    Util.post(path, {
-      keyword: val
-    }, function(data) {
-      if(data.status) {
-        results = data.data;
-        for(var i=0;i<results.length;i++) {
-          items.push(
-            <Cabinet
-              data={results[i]}
-              nav={that.props.navigator}
-              component={CabinetView}
-              name={results[i].name}
-             />
-          );
-        }
-      } else {
-        Alert.alert('查看机柜', data.msg);
-      }
-    });
-    */
 
-    this.props.nav.push({
-      title: this.props.data.name,
-      component: CabinetView,
-      passProps: {
-        cabinet: this.props.data,
-        state: this,
-      },
-      rightButtonIcon: {uri: Util.base64Icon_menu, scale: 1.5}, 
+    // 查询收藏状态
+    LSM.isFaviratedCabinet(that.props.data.id, function(err, isFavirated) {
+      if(!err) {
+        that.state.favirateText = isFavirated?Util.TEXT_FAVIRATE_REMOVE:Util.TEXT_FAVIRATE_ADD;
+        that.state.onFavirateText = isFavirated?that._cancelFavirate:that._addFavirate;
+      } else {
+        console.log('err:\n\n' + err);
+      }
+
+      that.props.nav.push({
+        title: that.props.data.name,
+        component: CabinetView,
+        passProps: {
+          cabinet: that.props.data,
+          state: that,
+        },
+        favirateText: that.state.favirateText,
+        onFavirateText: that.state.onFavirateText
+      });
     });
+
+    
   },
 
   render() {
