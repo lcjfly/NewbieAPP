@@ -354,7 +354,7 @@ var LocalStorageManager = {
           var fCabinetIds = null;
           AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
             if(!err) {
-              fCabinetIds = value;
+              fCabinetIds = eval(value);
               if(fCabinetIds.indexOf(cabinetId) != -1) {
 
               } else {
@@ -363,8 +363,8 @@ var LocalStorageManager = {
             } else {
               console.log('addFavirateCabinet failed \n\n');
             }
+            AsyncStorage.setItem(Service.LS_F_CABINETIDS, JSON.stringify(fCabinetIds));
           });
-          AsyncStorage.setItem(Service.LS_F_CABINETIDS, fCabinetIds);
         } else {
           callback(data.msg);
         }
@@ -392,10 +392,10 @@ var LocalStorageManager = {
             } else {
               console.log('removeFavirateCabinet failed \n\n');
             }
+            AsyncStorage.setItem(Service.LS_F_CABINETIDS, JSON.stringify(fCabinetIds));
           });
-          AsyncStorage.setItem(Service.LS_F_CABINETIDS, fCabinetIds);
         } else {
-          callback(data.s);
+          callback(data.msg);
         }
       });
       
@@ -412,7 +412,7 @@ var LocalStorageManager = {
           var fHostIds = null;
           AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
             if(!err) {
-              fHostIds = value;
+              fHostIds = eval(value);
               if(fHostIds.indexOf(hostId) != -1) {
 
               } else {
@@ -421,8 +421,8 @@ var LocalStorageManager = {
             } else {
               console.log('addFavirateHost failed \n\n');
             }
+            AsyncStorage.setItem(Service.LS_F_HOSTIDS, JSON.stringify(fHostIds));
           });
-          AsyncStorage.setItem(Service.LS_F_HOSTIDS, fHostIds);
         } else {
           callback(data.msg);
         }
@@ -440,7 +440,7 @@ var LocalStorageManager = {
 
           // cache
           var fHostIds = null;
-          AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
+          AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
             if(!err) {
               fHostIds = eval(value);
               var index = fHostIds.indexOf(hostId);
@@ -450,8 +450,8 @@ var LocalStorageManager = {
             } else {
               console.log('removeFavirateHost failed \n\n');
             }
+            AsyncStorage.setItem(Service.LS_F_HOSTIDS, JSON.stringify(fHostIds));
           });
-          AsyncStorage.setItem(Service.LS_F_HOSTIDS, fHostIds);
         } else {
           callback(data.msg);
         }

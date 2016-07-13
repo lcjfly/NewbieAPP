@@ -162,12 +162,7 @@ var RoomCabinetView = React.createClass({
       component: CabinetView,
       passProps: {
         state: this,
-        name: this.props.data.name
-      },
-      // for android
-      params: {
-        state: this,
-        name: this.props.data.name
+        cabinet: this.props.data
       },
       rightButtonIcon: {uri: Util.base64Icon_menu, scale: 1.5}, 
       onRightButtonPress: this._showActionSheet,

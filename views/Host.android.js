@@ -58,10 +58,8 @@ var Host = React.createClass({
             title: that.props.data.name,
             component: HostView,
             passProps: {
-              host : {
                 host: that.props.data,
                 state: that,
-              }
             },
             favirateText: that.state.favirateText,
             onFavirateText: that.state.onFavirateText
