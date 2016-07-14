@@ -24,11 +24,11 @@ var Service = require('./views/service');
 var Util = require('./views/util');
 
 var Home = require('./views/Home.js');
-var Favirate = require('./views/Favirate.js');
-var Message = require('./views/Message.ios.js');
-var Search = require('./views/Search.js');
-var Settings = require('./views/Settings.js');
-var Login = require('./views/Login.js');
+var Favirate = require('./views/Favirate');
+var ChatView = require('./views/ChatView');
+var Search = require('./views/Search');
+var Settings = require('./views/Settings');
+var Login = require('./views/Login');
 
 
 var base64Icon_home = 'data:image/png;base64,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';
@@ -157,7 +157,7 @@ var NewbieAPP = React.createClass({
                     notifCount: this.state.notifCount + 1,
                   });
                 }}>
-                {this._addNavigator(Message, '消息')}
+                {this._addNavigator(ChatView, '消息')}
               </TabBarIOS.Item>
               <TabBarIOS.Item
                 title="设置"

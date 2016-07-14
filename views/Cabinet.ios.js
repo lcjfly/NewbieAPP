@@ -23,11 +23,11 @@ var Cabinet = React.createClass({
       <TouchableOpacity onPress={this._loadPage.bind(this, this.props.data)}>
         <View style={styles.item}>
           <View style={styles.icon}>
-            <Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>{this.props.type}机柜</Text>
+            <Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>{this.props.data.type}机柜</Text>
           </View>
           <View style={{flexDirection: 'column', flex: 1}}>
             <Text numberOfLines={2} style={styles.name}>
-              {this.props.name}
+              {this.props.data.name}
             </Text>
           </View>
         </View>
@@ -103,11 +103,11 @@ var Cabinet = React.createClass({
   _loadPage: function(data) {
   	var cabinet = data;
   	this.props.nav.push({
-  		name: this.props.name,
+  		name: this.props.data.name,
   		component: this.props.component,
   		passProps: {
   			cabinet: cabinet,
-        name: this.props.name
+        name: this.props.data.name
   		},
       rightButtonIcon: {uri: base64Icon_menu, scale: 1.5}, 
       onRightButtonPress: this._showActionSheet,

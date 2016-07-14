@@ -167,6 +167,7 @@ var Login = React.createClass({
 
       if(data.status) {
         Alert.alert('注册', "注册成功，请返回登录");
+        that._showLogin();
       } else {
         Alert.alert('注册', data.msg);
       }

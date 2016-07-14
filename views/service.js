@@ -1,5 +1,7 @@
+var domain= 'opspoc.csvw.com';
+var http_port = 80;
 var Service = {
-	host: 'http://192.168.1.201:3000', //http://opspoc.csvw.com',
+	host: 'http://'+domain+':'+http_port,
 	reg: '/user/reg',
 	login: '/user/login',
 	loginByToken: '/user/login/token',
@@ -19,8 +21,10 @@ var Service = {
 
 	LS_F_HOSTIDS: 'LS_F_HOSTIDS',
 	LS_F_CABINETIDS: 'LS_F_CABINETIDS',
+	LS_HOSTS: 'LS_HOSTS',
+	LS_CABINETS: 'LS_CABINETS',
 
-	ws_url: 'ws://localhost:3000',
+	ws_url: 'ws://'+domain+':'+http_port,
 
 	
 }

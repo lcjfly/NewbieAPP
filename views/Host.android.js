@@ -31,14 +31,14 @@ var Host = React.createClass({
       <TouchableOpacity onPress={this._loadPage.bind(this, this.props.data)}>
       	<View style={styles.host}>
       	  <View style={styles.icon}>
-      	  	<Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>{this.props.type}主机</Text>
+      	  	<Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>{this.props.data.type}主机</Text>
       	  </View>
       	  <View style={{flexDirection: 'column', flex: 1}}>
       	  	<Text numberOfLines={2} style={styles.hostname}>
-      	  		{this.props.hostname}
+      	  		{this.props.data.name}
       	  	</Text>
       	  	<Text style={styles.hostip}>
-      	  		{this.props.ip}
+      	  		{this.props.data.ip}
       	  	</Text>
       	  </View>
       	</View>
@@ -107,7 +107,7 @@ var Host = React.createClass({
       }
 
     	that.props.nav.push({
-    		title: that.props.hostname,
+    		title: that.props.data.name,
     		component: that.props.component,
     		passProps: {
     			host: host

@@ -22,12 +22,12 @@ import TabNavigator from 'react-native-tab-navigator';
 var Service = require('./views/service');
 var Util = require('./views/util');
 
-var Home = require('./views/Home.js');
-var Favirate = require('./views/Favirate.js');
-var Search = require('./views/Search.js');
-var Settings = require('./views/Settings.js');
-var Login = require('./views/Login.js');
-var NavigatorExample = require('./views/NavigatorExample.js');
+var Home = require('./views/Home');
+var Favirate = require('./views/Favirate');
+var Search = require('./views/Search');
+var ChatView = require('./views/ChatView');
+var Settings = require('./views/Settings');
+var Login = require('./views/Login');
 
 var NewbieAPP = React.createClass({
 
@@ -165,7 +165,7 @@ var NewbieAPP = React.createClass({
                 renderIcon={() => <Image source={{uri: base64Icon_home, scale: 3}} />}
                 renderSelectedIcon={() => <Image source={{uri: base64Icon_home, scale: 3}} />}
                 onPress={() => this.setState({ selectedTab: 'chatTab' })}>
-                {this._addNavigator(Search, '消息')}
+                {this._addNavigator(ChatView, '消息')}
               </TabNavigator.Item>
               <TabNavigator.Item
                 selected={this.state.selectedTab === 'settingsTab'}

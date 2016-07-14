@@ -51,33 +51,25 @@ var Favirate = React.createClass({
         });
 
         var fHosts = favirates.hosts;
-        var fHostIds = [];
-
         for(var i=0;i<fHosts.length;i++) {
           hosts.push(
             <Host
               data={fHosts[i]}
               nav={that.props.navigator}
               component={HostView}
-              hostname={fHosts[i].host.name}
-              ip={fHosts[i].ip}
             />
           );
-          fHostIds.push(fHosts[i].id);
         }
 
         var fCabinets = favirates.cabinets;
-        var fCabinetIds = [];
         for(var i=0;i<fCabinets.length;i++) {
           cabinets.push(
             <Cabinet
               data={fCabinets[i]}
               nav={that.props.navigator}
               component={CabinetView}
-              name={fCabinets[i].name}
              />
           );
-          fCabinetIds.push(fCabinets[i].id);
         }
         that.setState({
           favirateHosts: hosts,

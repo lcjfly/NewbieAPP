@@ -267,20 +267,15 @@ var LocalStorageManager = {
       }
     },
 
-    cachedData: {
-      cabinets: {},
-      hosts:{},
-      chats:[]
-    },
-
     getCabinetById(cabinetId, callback) {
       var path = Service.host + Service.getCabinetById+cabinetId;
       Util.post(path, {}, function(data) {
         if(data.status) {
           cabinet = data.data;
-          // cache
-          LocalStorageManager.cachedData.cabinets[cabinet.id] = cabinet;
           callback(null, cabinet);
+
+          // cache
+          AsyncStorage.setItem(Service.LS_HOSTS+":"+cabinet.id, JSON.stringify(cabinet));
         } else {
           callback(1, null);
         }
@@ -292,9 +287,11 @@ var LocalStorageManager = {
       Util.get(path, {}, function(data) {
         if(data.status) {
           host = data.data;
-          // cache
-          LocalStorageManager.cachedData.hosts[host.id] = host;
           callback(null, host);
+
+          // cache
+          AsyncStorage.setItem(Service.LS_CABINETS+":"+host.id, JSON.stringify(host));
+          
         } else {
           callback(1, null);
         }
@@ -487,6 +484,19 @@ var LocalStorageManager = {
           }
       });
     },
+
+    /*
+    * get username
+    */
+    getUsername: function(callback) {
+      AsyncStorage.getItem("username", function(err, value) {
+        if(!err) {
+          callback(null, value);
+        }else {
+          callback(1, null);
+        }
+      });
+    }
 
 }
 
