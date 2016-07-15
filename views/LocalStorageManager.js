@@ -16,9 +16,9 @@ var LocalStorageManager = {
     fakeCabinetColumnPairData: [
       [
         [
-          {id: 0, index: 0, name: ' ', type: Util.CABINET_TYPE_POWER},
-          {id: 178, index: 1, name: 'JG178', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
-          {id: 179, index: 2, name: 'JG179', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
+          {index: 0, name: ' ', type: Util.CABINET_TYPE_POWER},
+          {index: 1, name: 'JG178', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
+          {index: 2, name: 'JG179', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 3, name: 'JG180', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
           {index: 5, name: 'JG17', type: Util.CABINET_TYPE_CABLE},
           {index: 6, name: 'JG290', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
@@ -43,7 +43,7 @@ var LocalStorageManager = {
           {index: 8, name: 'JG151', type: Util.CABINET_TYPE_OTHER},
           {index: 9, name: 'JG152', type: Util.CABINET_TYPE_OTHER},
           {index: 10, name: 'JG15', type: Util.CABINET_TYPE_STORAGE_HP_SUN},
-          {index: 15, name: 'JG01', type: Util.CABINET_TYPE_NETWORK},
+          {index: 15, name: ' ', type: Util.CABINET_TYPE_NETWORK},
           {index: 16, name: 'JG01', type: Util.CABINET_TYPE_NETWORK},
           {index: 17, name: 'JG02', type: Util.CABINET_TYPE_NETWORK},
           {index: 18, name: 'JG03', type: Util.CABINET_TYPE_NETWORK},
@@ -267,7 +267,9 @@ var LocalStorageManager = {
       }
     },
 
-    getCabinetById(cabinetId, callback) {
+    getCabinetById(cabinetId) {
+      return this.fakeCabinetData[cabinetId];
+      /*
       var path = Service.host + Service.getCabinetById+cabinetId;
       Util.post(path, {}, function(data) {
         if(data.status) {
@@ -280,9 +282,12 @@ var LocalStorageManager = {
           callback(1, null);
         }
       });
+      */
     },
 
-    getHostById(hostId, callback) {
+    getHostById(hostId) {
+      return this.fakeHostData[hostId];
+      /*
       var path = Service.host + Service.getHostById+hostId;
       Util.get(path, {}, function(data) {
         if(data.status) {
@@ -296,6 +301,7 @@ var LocalStorageManager = {
           callback(1, null);
         }
       });
+      */
     },
 
     /*
@@ -460,7 +466,7 @@ var LocalStorageManager = {
       AsyncStorage.getItem(Service.LS_F_HOSTIDS, function(err, value) {
           if(!err) {
             var fHostIds = value;
-            if(fHostIds.indexOf(hostid) != -1) {
+            if(fHostIds && fHostIds.indexOf(hostid) != -1) {
               callback(null, true)  
             } else {
               callback(null, false)
@@ -475,8 +481,7 @@ var LocalStorageManager = {
       AsyncStorage.getItem(Service.LS_F_CABINETIDS, function(err, value) {
           if(!err) {
             var fCabinetIds = value;
-            console.log('fCabinetIds'+fCabinetIds);
-            if(fCabinetIds.indexOf(cabinetid) != -1) {
+            if(fCabinetIds && fCabinetIds.indexOf(cabinetid) != -1) {
               callback(null, true)  
             } else {
               callback(null, false)
@@ -496,7 +501,160 @@ var LocalStorageManager = {
           callback(1, null);
         }
       });
+    },
+
+    loadDataFromServer: function() {
+      var cabinets = {};
+      var hosts = {};
+
+      var cabinetDatas = require('./cabinets.json');
+      for(var i=0;i<cabinetDatas.length;i++) {
+        var cabinetData = cabinetDatas[i];
+        var cabinet = {};
+
+        if(cabinetData["id"] && cabinetData["cabinet_no"]) {
+          this.setFakeCabinetId(cabinetData["cabinet_no"], cabinetData["id"]);
+        }
+
+        for(var key in cabinetData) {
+          if(key != "devices") {
+            // add cabinet
+            cabinet[key] = cabinetData[key];
+          } else {
+            var hostDatas = cabinetData["devices"];
+            for(var j=0;j<hostDatas.length;j++) {
+              // add host start
+              var hostData = hostDatas[j];
+              var host = {};
+              host["cabinet_id"] = cabinetData["id"];
+              host["cabinet_name"] = cabinetData["cabinet_no"];
+              for(var key in hostData) {
+                if(key != 'childrenDevices') {
+                  host[key] = hostData[key];
+                } else {
+                  // add children devices
+                  var childrenDevicesDatas = hostDatas[j]["childrenDevices"];
+                  for(var k=0;k<childrenDevicesDatas.length;k++) {
+                    // add children device start
+                    var childrenDeviceData = childrenDevicesDatas[k];
+                    var childrenDevice = {};
+                    childrenDevice["cabinet_id"] = cabinetData["id"];
+                    childrenDevice["cabinet_name"] = cabinetData["cabinet_no"];
+                    for(var key in childrenDeviceData) {
+                      if(key != 'childrenDevices') {
+                        childrenDevice[key] = childrenDeviceData[key];
+                      }
+                    }
+                    hosts[childrenDevice.id] = childrenDevice;
+                    // add children device end
+                  }
+                  // add children devices
+                }
+              }
+              hosts[host.id] = host;
+              // add host end
+
+              // add cabinet slots start
+              if(!cabinet["slots"]) {
+                cabinet["slots"] = [];
+              }
+
+              // slots
+              var slots = [];
+              if(hostData["deviceType"]["key"] == "SERVER_CAGE") {
+                var childrenDevicesDatas = hostDatas[j]["childrenDevices"];
+                for(var l=0;l<childrenDevicesDatas.length;l++) {
+                  var childrenDevice = childrenDevicesDatas[l];
+                  var slot = {
+                    index: parseInt(childrenDevice["start_position"]),
+                    slotId: childrenDevice["id"],
+                    slotName: childrenDevice["dc_name"],
+                    slotType: childrenDevice["deviceType"]["key"]
+                  };
+                  slots.push(slot);
+                }
+              } else {
+                slots.push({
+                  index: 0,
+                  slotId: host.id,
+                  slotName: host["dc_name"],
+                  slotType: host["deviceType"]["key"]
+                });
+              }
+
+              var cabinetSlot = {
+                id: host["id"],
+                uStart: parseInt(host["start_position"])>42?42:parseInt(host["start_position"]),
+                uEnd: parseInt(host["end_position"])>42?42:parseInt(host["end_position"]),
+                unitColumnCount: host["deviceType"]["id"]==1?8:1,
+                unitRowCount: host["deviceType"]["id"]==1?2:1,
+                slotDatas: slots
+              };
+              cabinet["slots"].push(cabinetSlot);
+              // add cabinet slots end
+            }
+          }
+        }
+        // add cabinet
+
+        // sort cabinet slots by uStart asec
+        if(cabinet["slots"]) {
+          cabinet["slots"].sort(Util.keysrt('uStart'));
+        }else {
+          cabinet["slots"] = [];
+        }
+        cabinets[cabinet.id] = cabinet;
+      }
+      this.fakeCabinetData = cabinets;
+      this.fakeHostData = hosts;
+    },
+
+    setFakeCabinetId: function(cabinetName, cabinetId) {
+      var columnPair = this.fakeCabinetColumnPairData;
+      for(var i=0;i<columnPair.length;i++) {
+        var column = columnPair[i];
+        for(var j=0;j<column.length;j++) {
+          var cabinets = column[j];
+          for(var k=0;k<cabinets.length;k++) {
+            if(cabinets[k].name == cabinetName) {
+              cabinets[k]["id"] = cabinetId;
+              break;
+            }
+          }
+        }
+      }
+    },
+
+    searchCabinetByName: function(cabinetName) {
+      var cabinets = [];
+      for(var key in this.fakeCabinetData) {
+          if(!this.fakeCabinetData[key] || !this.fakeCabinetData[key]["cabinet_no"]) {
+            return [];
+          } else {
+            var cabinetId = this.fakeCabinetData[key]["cabinet_no"];
+            if(cabinetId.indexOf(cabinetName) != -1) {
+              cabinets.push(this.fakeCabinetData[key]); 
+            }
+          }
+      }
+      return cabinets;
+    },
+
+    searchHostByName: function(hostName) {
+      var hosts = [];
+      for(var key in this.fakeHostData) {
+          if(!this.fakeHostData[key] || !this.fakeHostData[key]["dc_name"]) {
+            return [];
+          } else {
+            var hostId = this.fakeHostData[key]["dc_name"];
+            if(hostId.indexOf(hostName) != -1) {
+              hosts.push(this.fakeHostData[key]); 
+            }
+          }
+      }
+      return hosts;
     }
+
 
 }
 

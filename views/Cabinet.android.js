@@ -35,7 +35,7 @@ var Cabinet = React.createClass({
           </View>
           <View style={{flexDirection: 'column', flex: 1}}>
             <Text numberOfLines={2} style={styles.name}>
-              {this.props.data.name}
+              {this.props.data.cabinet_no}
             </Text>
           </View>
         </View>
@@ -106,7 +106,7 @@ var Cabinet = React.createClass({
       }
 
     	that.props.nav.push({
-    		title: that.props.data.name,
+    		title: that.props.data.cabinet_no,
     		component: that.props.component,
     		passProps: {
     			cabinet: cabinet

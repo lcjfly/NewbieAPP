@@ -15,6 +15,7 @@ var Util = require('./util');
 var Service = require('./service');
 var Cabinet = require('./Cabinet');
 var CabinetView = require('./CabinetView');
+var LSM = require('./LocalStorageManager');
 
 var SearchCabinet = React.createClass({
   getInitialState: function() {
@@ -42,11 +43,29 @@ var SearchCabinet = React.createClass({
 	},
 
   _search: function(val) {
+    var that = this;
+    var items = [];
+    var results = LSM.searchCabinetByName(val);
+    for(var i=0;i<results.length;i++) {
+      items.push(
+        <Cabinet
+          data={results[i]}
+          nav={that.props.navigator}
+          component={CabinetView}
+         />
+      );
+    }
+    this.setState({
+      items: items
+    });
+
+    /*
     var path = Service.host + Service.searchCabinet;
     var results = [];
     var that = this;
     var items = [];
     // search action
+    
     Util.post(path, {
       keyword: val
     }, function(data) {
@@ -59,7 +78,6 @@ var SearchCabinet = React.createClass({
               data={results[i]}
               nav={that.props.navigator}
               component={CabinetView}
-              name={results[i].name}
              />
           );
         }
@@ -70,6 +88,7 @@ var SearchCabinet = React.createClass({
         Alert.alert('搜索', data.msg);
       }
     });
+    */
   }
 });
 

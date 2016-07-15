@@ -18,6 +18,7 @@ var Service = require('./service');
 var Util = require('./util');
 var Feedback = require('./Feedback');
 var Version = require('./Version');
+var LSM = require('./LocalStorageManager');
 
 var ReactNativeTableviewSimple = require('react-native-tableview-simple');
 var TableView = ReactNativeTableviewSimple.TableView;
@@ -114,6 +115,10 @@ var Settings = React.createClass({
     });
   },
 
+  _doLoadData: function() {
+    LSM.loadDataFromServer();
+  },
+
 	render() {
 	    return (
         <ScrollView contentContainerStyle={styles.stage}>
@@ -137,6 +142,7 @@ var Settings = React.createClass({
               </Section>
 
               <Section header="版本信息">
+                <Cell cellstyle="Basic" title="同步数据" onPress={this._doLoadData}/>
                 <Cell cellstyle="Basic" title="更新日志" accessory="DisclosureIndicator" onPress={this._gotoVersionLog}/>
                 <Cell cellstyle="Basic" title="报告BUG" accessory="DisclosureIndicator" onPress={this._gotoFeedback}/>
               </Section>

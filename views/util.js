@@ -104,8 +104,13 @@ var Util = {
 	CABINET_COLOR_OTHER: '#86a6d9',
 
 	TEXT_FAVIRATE_ADD: '加入收藏',
-	TEXT_FAVIRATE_REMOVE: '移出收藏'
+	TEXT_FAVIRATE_REMOVE: '移出收藏',
 
+	keysrt: function(key) {
+	  return function(a,b){
+	    return a[key] - b[key];
+	  }
+	}
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -129,5 +134,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+
 
 module.exports = Util;

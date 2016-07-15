@@ -18,6 +18,9 @@ var RoomView = React.createClass({
 
   getInitialState: function() {
 
+    // test
+    LSM.loadDataFromServer();
+
     var that = this;
     
     var cabinetColumnPairData = LSM.fakeCabinetColumnPairData;

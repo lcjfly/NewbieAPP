@@ -34,11 +34,15 @@ var CabinetView = React.createClass({
         <CabinetUnitView uStart={i} uEnd={i} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
     }
 
-    var json = LSM.fakeCabinetData[this.props.cabinet.id];
+    var json = {};
+    if(this.props.cabinet && this.props.cabinet.id && LSM.fakeCabinetData[this.props.cabinet.id].slots){
+      json = LSM.fakeCabinetData[this.props.cabinet.id].slots;
+    };
     
     if(!json || !json.length) {
       return {};
     }
+
     var that = this;
     var temp = 0;
     for(var i=0;i<json.length;i++) {
@@ -56,10 +60,11 @@ var CabinetView = React.createClass({
     // 将机柜平面图中连续的空槽位合并显示为一个空槽位
     for(var i=0;i<testuDatas.length;i++) {
       if(testuDatas[i].props.unitColumnCount == '1' && testuDatas[i].props.unitRowCount == '1'
-        && testuDatas[i].props.slotDatas[0].slotName == '' && testuDatas[i].props.slotDatas[0].slotType == '') {
+        && testuDatas[i].props.slotDatas.length>0 && testuDatas[i].props.slotDatas[0].slotName == '' && testuDatas[i].props.slotDatas[0].slotType == '') {
           var temp = i+1;
-          while(true) {
+          while(temp<testuDatas.length) {
             if(testuDatas[temp].props.unitColumnCount == '1' && testuDatas[temp].props.unitRowCount == '1'
+              && testuDatas[temp].props.slotDatas.length>0
               && testuDatas[temp].props.slotDatas[0].slotName == '' && testuDatas[temp].props.slotDatas[0].slotType == '') {
               temp++;
             } else {
@@ -70,7 +75,7 @@ var CabinetView = React.createClass({
             testuDatas.splice(
               i,
               temp-i, 
-              <CabinetUnitView uStart={i} uEnd={temp -1} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
+              <CabinetUnitView uStart={testuDatas[i].props.uStart} uEnd={testuDatas[temp-1].props.uEnd} slotDatas={[{index: 0, slotName: '', slotType:''}]} unitColumnCount='1' unitRowCount='1' />);
           }
       }
     }

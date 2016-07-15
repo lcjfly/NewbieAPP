@@ -27,7 +27,7 @@ var Host = React.createClass({
       	  </View>
       	  <View style={{flexDirection: 'column', flex: 1}}>
       	  	<Text numberOfLines={2} style={styles.hostname}>
-      	  		{this.props.data.name}
+      	  		{this.props.data.dc_name}
       	  	</Text>
       	  	<Text style={styles.hostip}>
       	  		{this.props.data.ip}
@@ -107,7 +107,7 @@ var Host = React.createClass({
   _loadPage: function(data) {
   	var host = data;
   	this.props.nav.push({
-  		name: this.props.data.hostname,
+  		name: this.props.data.dc_name,
   		component: this.props.component,
   		passProps: {
         id: host.id,

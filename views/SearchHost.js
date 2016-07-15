@@ -15,6 +15,7 @@ var Util = require('./util');
 var Service = require('./service');
 var Host = require('./Host');
 var HostView = require('./HostView');
+var LSM = require('./LocalStorageManager');
 
 var SearchHost = React.createClass({
   getInitialState: function() {
@@ -42,6 +43,23 @@ var SearchHost = React.createClass({
 	},
 
   _search: function(val) {
+    var items = [];
+    var that = this;
+    var results = LSM.searchHostByName(val);
+    for(var i=0;i<results.length;i++) {
+      items.push(
+        <Host
+          data={results[i]}
+          nav={that.props.navigator}
+          component={HostView}
+         />
+      );
+    }
+    this.setState({
+      items: items
+    });
+
+    /*
     var path = Service.host + Service.searchHost;
     var results = [];
     var that = this;
@@ -70,6 +88,7 @@ var SearchHost = React.createClass({
         Alert.alert('搜索', data.msg);
       }
     });
+    */
   }
 });
 

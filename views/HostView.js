@@ -23,19 +23,10 @@ var HostView = React.createClass({
 
   getInitialState: function() {
     var that = this;
-    var host = {host: {}, network: {}};
-    if(that.props.host.id) {
-      LSM.getHostById(that.props.host.id, function(err, host) {
-        if(!err) {
-          that.setState({
-              host: host
-          })
-        }
-      });
-    }
+    var host = {};
     
     return {
-      host: host,
+      host: that.props.host.id? LSM.getHostById(that.props.host.id): 0
     }
   },
 
@@ -44,20 +35,20 @@ var HostView = React.createClass({
       <ScrollView style={styles.container}>
         <TableView>
           <Section header="主机信息">
-            <Cell cellstyle="RightDetail" title="机名" detail={this.state.host.host.name} />
-            <Cell cellstyle="RightDetail" title="序列号" detail={this.state.host.host.serial} />
-            <Cell cellstyle="RightDetail" title="机柜号" detail={this.state.host.host.cabinet} />
-            <Cell cellstyle="RightDetail" title="负责人" detail={this.state.host.host.owner} />
-            <Cell cellstyle="RightDetail" title="IP" detail={this.state.host.host.ip} />
-            <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.host.comment} />
+            <Cell cellstyle="RightDetail" title="机名" detail={this.state.host.dc_name} />
+            <Cell cellstyle="RightDetail" title="序列号" detail={this.state.host.dc_sn} />
+            <Cell cellstyle="RightDetail" title="机柜号" detail={this.state.host.cabinet_name} />
+            <Cell cellstyle="RightDetail" title="负责人" detail={this.state.host.userid} />
+            <Cell cellstyle="RightDetail" title="IP" detail={this.state.host.ip} />
+            <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.remark} />
           </Section>
 
           <Section header="网络信息">
-            <Cell cellstyle="RightDetail" title="网络机柜号" detail={this.state.host.network.cabinet} />
-            <Cell cellstyle="RightDetail" title="switch名" detail={this.state.host.network.switch} />
-            <Cell cellstyle="RightDetail" title="switch端口" detail={this.state.host.network.switch_port} />
-            <Cell cellstyle="RightDetail" title="配线架端口" detail={this.state.host.network.cable_port} />
-            <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.network.comment} />
+            <Cell cellstyle="RightDetail" title="网络机柜号" detail={this.state.host.cabinet} />
+            <Cell cellstyle="RightDetail" title="switch名" detail={this.state.host.switch} />
+            <Cell cellstyle="RightDetail" title="switch端口" detail={this.state.host.switch_port} />
+            <Cell cellstyle="RightDetail" title="配线架端口" detail={this.state.host.cable_port} />
+            <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.comment} />
           </Section>
 
           {

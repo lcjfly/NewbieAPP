@@ -35,7 +35,7 @@ var Host = React.createClass({
       	  </View>
       	  <View style={{flexDirection: 'column', flex: 1}}>
       	  	<Text numberOfLines={2} style={styles.hostname}>
-      	  		{this.props.data.name}
+      	  		{this.props.data.dc_name}
       	  	</Text>
       	  	<Text style={styles.hostip}>
       	  		{this.props.data.ip}
@@ -55,7 +55,7 @@ var Host = React.createClass({
           that.state.onFavirateText = that._cancelFavirate;
 
           that.props.nav.replace({
-            title: that.props.data.name,
+            title: that.props.data.dc_name,
             component: HostView,
             passProps: {
                 host: that.props.data,
@@ -78,7 +78,7 @@ var Host = React.createClass({
         that.state.onFavirateText = that._addFavirate;
 
         that.props.nav.replace({
-          title: that.props.data.name,
+          title: that.props.data.dc_name,
           component: HostView,
           passProps: {
             host: that.props.data,
@@ -107,7 +107,7 @@ var Host = React.createClass({
       }
 
     	that.props.nav.push({
-    		title: that.props.data.name,
+    		title: that.props.data.dc_name,
     		component: that.props.component,
     		passProps: {
     			host: host
