@@ -327,19 +327,8 @@ var LocalStorageManager = {
           callback(null, data.data);
 
           var fHosts = data.data.hosts;
-          var fHostIds = [];
-
-          for(var i=0;i<fHosts.length;i++) {
-            fHostIds.push(fHosts[i].id);
-          }
-
           var fCabinets = data.data.cabinets;
-          var fCabinetIds = [];
-          for(var i=0;i<fCabinets.length;i++) {
-            fCabinetIds.push(fCabinets[i].id);
-          }
-          
-          LocalStorageManager._setFavirates(fHostIds, fCabinetIds);
+          LocalStorageManager._setFavirates(fHosts, fCabinets);
         } else {
           callback(data.msg);
         }

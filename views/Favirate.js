@@ -18,7 +18,7 @@ var Host = require('./Host');
 var HostView = require('./HostView');
 var Cabinet = require('./Cabinet');
 var CabinetView = require('./CabinetView');
-var LocalStorageManager = require('./LocalStorageManager');
+var LSM = require('./LocalStorageManager');
 
 var Favirate = React.createClass({
   getInitialState: function() {
@@ -44,32 +44,38 @@ var Favirate = React.createClass({
       refreshing: true
     });
 
-    LocalStorageManager.getFavirates(function(err, favirates) {
+    LSM.getFavirates(function(err, favirates) {
 
         that.setState({
           refreshing: false
         });
 
-        var fHosts = favirates.hosts;
-        for(var i=0;i<fHosts.length;i++) {
-          hosts.push(
-            <Host
-              data={fHosts[i]}
-              nav={that.props.navigator}
-              component={HostView}
-            />
-          );
+        var fHostIds = favirates.hosts;
+        for(var i=0;i<fHostIds.length;i++) {
+          var fHostData = LSM.getHostById(fHostIds[i]);
+          if(fHostData) {
+            hosts.push(
+              <Host
+                data={fHostData}
+                nav={that.props.navigator}
+                component={HostView}
+              />
+            );
+          }
         }
 
-        var fCabinets = favirates.cabinets;
-        for(var i=0;i<fCabinets.length;i++) {
-          cabinets.push(
-            <Cabinet
-              data={fCabinets[i]}
-              nav={that.props.navigator}
-              component={CabinetView}
-             />
-          );
+        var fCabinetIds = favirates.cabinets;
+        for(var i=0;i<fCabinetIds.length;i++) {
+          var fCabinetData = LSM.getCabinetById(fCabinetIds[i]);
+          if(fCabinetData) {
+            cabinets.push(
+              <Cabinet
+                data={fCabinetData}
+                nav={that.props.navigator}
+                component={CabinetView}
+               />
+            );
+          }
         }
         that.setState({
           favirateHosts: hosts,
