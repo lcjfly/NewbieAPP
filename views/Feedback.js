@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,7 +42,7 @@ var Feedback = React.createClass({
     Util.post(path, {
       content: that.state.content
     }, function(data) {
-      if(data.status) {
+      if(!data.status) {
         Alert.alert('反馈', data.msg);
       } else {
         Alert.alert('反馈', '提交成功');

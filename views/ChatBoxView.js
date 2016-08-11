@@ -12,7 +12,7 @@ var ChatBoxView = React.createClass({
   getInitialState: function() {
     return {
       name: this.props.message.name,
-      date: this.props.message.date.toString(),
+      time: this.props.message.time.toString(),
       text: this.props.message.text,
       img: this.props.message.img,
       position: this.props.message.position,
@@ -35,7 +35,7 @@ var ChatBoxView = React.createClass({
 	          		<Text style={styles.text}>{this.state.text}</Text>
 	          	</View>
 	          	<View style={styles.timeView}>
-	          		<Text style={styles.time}>{this.state.date}</Text>
+	          		<Text style={styles.time}>{this.state.time}</Text>
 	          	</View>
           	</View>
         </View>
