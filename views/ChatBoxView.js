@@ -12,7 +12,7 @@ var ChatBoxView = React.createClass({
   getInitialState: function() {
     return {
       name: this.props.message.name,
-      time: this.props.message.time.toString(),
+      time: this.props.message.time!=null?this.props.message.time.toString():'',
       text: this.props.message.text,
       img: this.props.message.img,
       position: this.props.message.position,

@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -31,25 +32,54 @@ var HostView = React.createClass({
   },
 
   render() {
+    var portInfoSections = [];
+    if(this.state.host && this.state.host.portInfo) {
+      var portInfos = this.state.host.portInfo;
+      for(var index in portInfos) {
+        var portInfo = portInfos[index];
+        portInfoSections.push(
+          <Section header="端口信息">
+            <Cell cellstyle="RightDetail" title="端口号" detail={portInfo.port} />
+            <Cell cellstyle="RightDetail" title="IP" detail={portInfo.ip} />
+            <Cell cellstyle="RightDetail" title="备注" detail={portInfo.remark} />
+            
+            <Cell cellstyle="RightDetail" title="交换机名称" detail={portInfo.switchPort.switchDevice.dc_name} />
+            <Cell cellstyle="RightDetail" title="交换机端口" detail={portInfo.switchPort.port} />
+            <Cell cellstyle="RightDetail" title="交换机端口备注" detail={portInfo.switchPort.remark} />
+            <Cell cellstyle="RightDetail" title="交换机负责人" detail={portInfo.switchPort.switchDevice.user.name} />
+            <Cell cellstyle="RightDetail" title="交换机负责人工号" detail={portInfo.switchPort.switchDevice.user.usrid} />
+            <Cell cellstyle="RightDetail" title="交换机负责人邮箱" detail={portInfo.switchPort.switchDevice.user.mail} />
+            <Cell cellstyle="RightDetail" title="交换机负责人部门" detail={portInfo.switchPort.switchDevice.user.dep} />
+            <Cell cellstyle="RightDetail" title="交换机负责人分机" detail={portInfo.switchPort.switchDevice.user.phone} />
+          </Section>
+        );
+      }
+    }
     return (
       <ScrollView style={styles.container}>
         <TableView>
           <Section header="主机信息">
             <Cell cellstyle="RightDetail" title="机名" detail={this.state.host.dc_name} />
+            <Cell cellstyle="RightDetail" title="设备类型" detail={this.state.host.deviceType.value} />
             <Cell cellstyle="RightDetail" title="序列号" detail={this.state.host.dc_sn} />
             <Cell cellstyle="RightDetail" title="机柜号" detail={this.state.host.cabinet_name} />
-            <Cell cellstyle="RightDetail" title="负责人" detail={this.state.host.userid} />
+            <Cell cellstyle="RightDetail" title="结束位置" detail={this.state.host.end_position} />
+            <Cell cellstyle="RightDetail" title="开始位置" detail={this.state.host.start_position} />
             <Cell cellstyle="RightDetail" title="IP" detail={this.state.host.ip} />
             <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.remark} />
           </Section>
 
-          <Section header="网络信息">
-            <Cell cellstyle="RightDetail" title="网络机柜号" detail={this.state.host.cabinet} />
-            <Cell cellstyle="RightDetail" title="switch名" detail={this.state.host.switch} />
-            <Cell cellstyle="RightDetail" title="switch端口" detail={this.state.host.switch_port} />
-            <Cell cellstyle="RightDetail" title="配线架端口" detail={this.state.host.cable_port} />
-            <Cell cellstyle="RightDetail" title="备注" detail={this.state.host.comment} />
+          <Section header="负责人信息">
+            <Cell cellstyle="RightDetail" title="姓名" detail={this.state.host.user.name} />
+            <Cell cellstyle="RightDetail" title="工号" detail={this.state.host.user.usrid} />
+            <Cell cellstyle="RightDetail" title="部门" detail={this.state.host.user.dep} />
+            <Cell cellstyle="RightDetail" title="分机" detail={this.state.host.user.phone} />
+            <Cell cellstyle="RightDetail" title="邮箱" detail={this.state.host.user.mail} />
           </Section>
+
+          {
+            portInfoSections
+          }
 
           {
             this.state.host.san ?

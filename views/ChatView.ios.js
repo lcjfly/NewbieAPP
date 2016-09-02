@@ -61,7 +61,6 @@ var ChatView = React.createClass({
     });
 
     return {
-      username: '',
       content: '',
       chatboxs: chatboxs,
     }
@@ -141,10 +140,8 @@ var ChatView = React.createClass({
 
   _handleSend() {
     var chatMsg = [
-        Math.round(Math.random() * 10000), // simulating server-side unique id generation
         this.state.username,
         this.state.content,
-        (new Date()).Format("yyyy-MM-dd hh:mm:ss"),
     ];
 
     this._ws.send(JSON.stringify(chatMsg));
@@ -161,7 +158,7 @@ var ChatView = React.createClass({
       id: msg[0],
       name: msg[1],
       text: msg[2],
-      date: msg[3]
+      time: msg[3]
     };
     var chatboxs = this.state.chatboxs;
     chatboxs.push(<ChatBoxView message={messageData} />);
